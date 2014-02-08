@@ -1,5 +1,14 @@
+html, body, #site-container {
+  height:100%;
+}
 body { 
-    background:#fff;        
+    background:
+      radial-gradient(#ccc 15%, transparent 16%) 0 0,
+      radial-gradient(#ccc 15%, transparent 16%) 8px 8px,
+      radial-gradient(rgba(255,255,255,0.8) 15%, transparent 20%) 0 1px,
+      radial-gradient(rgba(255,255,255,0.8) 15%, transparent 20%) 8px 9px;
+    background-color:#ddd;
+    background-size:16px 16px;        
 }
   .header {
   }
@@ -24,8 +33,14 @@ body {
     display: inline;
   }
 
+
+  /*header*/
   #header .navbar {
+    position: fixed;
+    top: 0; left: 0; right:0;
     background: #3D0C42;
+    margin-bottom: 0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.7);
   }
   #header .navbar .navbar-toggle:hover, 
   #header .navbar .navbar-toggle:focus,
@@ -92,6 +107,27 @@ body {
     background: url(/i/logo/logo2_sq.png) 0 0 no-repeat;
     background-size: 100% 100%;
   }
+
+
+
+  .outer-page-container {
+    max-width: 1000px;
+    height:100%;
+    margin: 0 auto;
+    background: #fff;
+    border-right: 1px solid #3D0C42;
+    border-left: 1px solid #3D0C42;
+    padding-top: 51px;
+  }
+  .page-container {
+    height:100%;
+    padding: 10px;
+    overflow: auto;
+
+  }
+
+
+
 
   .home-page {
     width: 551px;
