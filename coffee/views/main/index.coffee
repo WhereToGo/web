@@ -10,12 +10,12 @@ define [
     region:'main'
     template: template
     template = null
-    
+
     initialize: =>
       super
       @afterRender()
-        
-        
+    
+
     afterRender: =>
       #geolocation
       x = document.getElementById('main-container')

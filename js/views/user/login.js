@@ -11,7 +11,6 @@ define(['views/base/view', 'text!templates/user/login.hbs'], function(View, temp
 
     function LoginView() {
       this.join = __bind(this.join, this);
-      this.initialize = __bind(this.initialize, this);
       return LoginView.__super__.constructor.apply(this, arguments);
     }
 
@@ -22,10 +21,6 @@ define(['views/base/view', 'text!templates/user/login.hbs'], function(View, temp
     LoginView.prototype.template = template;
 
     template = null;
-
-    LoginView.prototype.initialize = function() {
-      return this.delegate('submit', 'form', this.join);
-    };
 
     LoginView.prototype.join = function(e) {
       var formData;

@@ -1,6 +1,7 @@
 define [
   'views/base/view'
   'text!templates/site.hbs'
+    
 ], (View, template) ->
   'use strict'
 
@@ -12,5 +13,11 @@ define [
       header: '#header'
     template: template
     template = null
+    
+    addNewEvent:()=>
+      
+            
+    initialize:() =>
+        @delegate 'click', '.addEvent', @addNewEvent
 
     

@@ -119,3 +119,8 @@ body {
     line-height: 20px;
     vertical-align: top;   
 }
+.addEvent{
+    position:absolute;
+    bottom:0;
+    z-index:9999px;
+}

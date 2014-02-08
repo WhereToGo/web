@@ -11,9 +11,6 @@ define [
     template: template
     template = null
     
-    initialize: =>
-      @delegate 'submit', 'form', @join
-
     join: (e) =>
       e.preventDefault()
       formData = $(e.target).serializeObject()
