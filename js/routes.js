@@ -2,7 +2,6 @@
 define(function() {
   'use strict';
   return function(match) {
-    match('', 'main#login');
-    return match('/#startup', 'main#startup');
+    return match('', 'main#login');
   };
 });
