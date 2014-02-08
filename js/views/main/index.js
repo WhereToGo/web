@@ -3,7 +3,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/view', 'text!templates/main/index.hbs', 'geo'], function(View, template, Geo) {
+define(['chaplin', 'views/base/view', 'text!templates/main/index.hbs', 'geo'], function(Chaplin, View, template, Geo) {
   'use strict';
   var IndexView;
   return IndexView = (function(_super) {
@@ -58,11 +58,20 @@ define(['views/base/view', 'text!templates/main/index.hbs', 'geo'], function(Vie
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       this.map = new google.maps.Map(this.$el.find("#mapView")[0], mapOptions);
-      return this.me = new google.maps.Marker({
+      this.me = new google.maps.Marker({
         position: startCoords,
         map: this.map,
         title: "You are here!"
       });
+      this.markers = [];
+      return setTimeout((function(_this) {
+        return function() {
+          return _this.addMarker({
+            id: 0,
+            title: "ololo1"
+          }, new google.maps.LatLng(46.46568, 30.756255));
+        };
+      })(this), 3000);
     };
 
     IndexView.prototype.setCenter = function(LatLng) {
@@ -70,7 +79,23 @@ define(['views/base/view', 'text!templates/main/index.hbs', 'geo'], function(Vie
       return this.me.setPosition(LatLng);
     };
 
-    IndexView.prototype.addMarker = function(LatLng) {};
+    IndexView.prototype.addMarker = function(model, LatLng) {
+      var marker, markerImage;
+      markerImage = new google.maps.MarkerImage('/i/sports.png', new google.maps.Size(75, 75), new google.maps.Point(59, 55), new google.maps.Point(37, 37), new google.maps.Size(1000, 739));
+      marker = new google.maps.Marker({
+        icon: markerImage,
+        position: LatLng,
+        map: this.map,
+        title: model.title,
+        model: model
+      });
+      google.maps.event.addListener(marker, 'click', function(a) {
+        return Chaplin.utils.redirectTo({
+          url: "event/{@model.id}"
+        });
+      });
+      return this.markers.push(marker);
+    };
 
     return IndexView;
 
