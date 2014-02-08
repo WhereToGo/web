@@ -84,7 +84,7 @@ body {
     display: inline-block;
     width: 50px;
     height: 50px;
-    background: url(/i/logo/logo2_sq.png) 0 0 no-repeat;
+    background: url(../i/logo/logo2_sq.png) 0 0 no-repeat;
     background-size: 100% 100%;
   }
 
@@ -121,24 +121,48 @@ body {
   top:0;
   right:0;
   height:50%;
-    width:50%;
+  width:50%;
     
 }
 #EventMap{
-    width:100%;
-    position: absolute;
-    bottom:0;
-    height:50%;
-    margin-left:-10px;
+  width:100%;
+  position: absolute;
+  bottom:0;
+  height:50%;
+  margin-left:-10px;
     
 }
-#addEvent{
-    display:none;
-}
 .addEvent{
-    position:absolute;
-    bottom:0;
-    z-index:9999px;
+  width: 122px;
+  height:122px;
+  position:absolute;
+  bottom:5px;
+  left:50%;
+  margin-left: -61px;
+  z-index:9999px;
+  background: url(../i/new_circle.png) -3px -2px no-repeat;
+  background-size: 128px 128px;
+  border-radius: 100%;
+
+  opacity: 0.5;
+
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,0.7);
+  -moz-box-shadow: 0 5px 10px rgba(0,0,0,0.7);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.7);
+
+  -webkit-transition: bottom 0.5s, opacity 0.5s;
+  -moz-transition: bottom 0.5s, opacity 0.5s;
+  -ms-transition: bottom 0.5s, opacity 0.5s;
+  -o-transition: bottom 0.5s, opacity 0.5s;
+  transition: bottom 0.5s, opacity 0.5s;
+    
+}
+.addEvent:hover, .addEvent:focus {
+  bottom:20px;
+  opacity: 1;
+}
+.addEvent:hover:active, .addEvent:focus:active {
+  bottom: 19px;
 }
 #newEvent{
     position:absolute;
