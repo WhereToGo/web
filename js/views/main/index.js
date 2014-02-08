@@ -3,14 +3,18 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/view', 'text!templates/main/index.hbs'], function(View, template) {
+define(['views/base/view', 'text!templates/main/index.hbs', 'async!http://maps.google.com/maps/api/js?sensor=true&key=AIzaSyAU43H9HS_S0p94SLnuU-oxadj6tzdUXx0'], function(View, template) {
   'use strict';
   var IndexView;
   return IndexView = (function(_super) {
     __extends(IndexView, _super);
 
     function IndexView() {
-      this.afterRender = __bind(this.afterRender, this);
+      this.afterRenderOld = __bind(this.afterRenderOld, this);
+      this.addMarker = __bind(this.addMarker, this);
+      this.setMapCenter = __bind(this.setMapCenter, this);
+      this.getCoords = __bind(this.getCoords, this);
+      this.createMap = __bind(this.createMap, this);
       this.initialize = __bind(this.initialize, this);
       return IndexView.__super__.constructor.apply(this, arguments);
     }
@@ -24,11 +28,42 @@ define(['views/base/view', 'text!templates/main/index.hbs'], function(View, temp
     template = null;
 
     IndexView.prototype.initialize = function() {
-      IndexView.__super__.initialize.apply(this, arguments);
-      return this.afterRender();
+      return IndexView.__super__.initialize.apply(this, arguments);
     };
 
-    IndexView.prototype.afterRender = function() {
+    IndexView.prototype.attach = function() {
+      IndexView.__super__.attach.apply(this, arguments);
+      return this.createMap();
+    };
+
+    IndexView.prototype.createMap = function() {
+      var mapOptions, startCoords;
+      startCoords = this.getCoords();
+      mapOptions = {
+        zoom: 14,
+        center: startCoords,
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+          style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+        },
+        navigationControl: true,
+        navigationControlOptions: {
+          style: google.maps.NavigationControlStyle.SMALL
+        },
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      return this.map = new google.maps.Map(this.$el.find("#mapView")[0], mapOptions);
+    };
+
+    IndexView.prototype.getCoords = function() {
+      return new google.maps.LatLng(46.48048, 30.756235);
+    };
+
+    IndexView.prototype.setMapCenter = function(LatLng) {};
+
+    IndexView.prototype.addMarker = function(LatLng) {};
+
+    IndexView.prototype.afterRenderOld = function() {
       var getLocation, showError, showPosition, x;
       x = document.getElementById('main-container');
       getLocation = (function(_this) {

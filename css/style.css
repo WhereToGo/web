@@ -101,26 +101,27 @@ body {
     height:100%;
     padding: 10px;
     overflow: auto;
-
+    position: relative;
   }
 
-.loginFields p{
-    text-align:left;   
-}
-.loginFields{
-    margin-left:auto;
-    margin-right:auto;
-    max-width:200px;
-}
-.loginFields .userNameInput{
-    width:200px;
-}
-.ckBox{
-    line-height: 20px;
-    vertical-align: top;   
+
+
+
+#mapView {
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  -webkit-filter: saturate(3);
+  -moz-filter: saturate(3);
+  filter: saturate(3);
 }
 .addEvent{
     position:absolute;
     bottom:0;
     z-index:9999px;
+}
+#newEvent{
+    position:absolute;
 }
