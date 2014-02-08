@@ -1,10 +1,23 @@
-<p>Event title</p>
-<input type="text" value="" name="eventTitle">
-<p>Description</p>
-<textarea></textarea>
-<p><input type="checkbox"/>biketrial</p>
-<p><input type="checkbox"/>skatebording</p>
-<p><input type="checkbox"/>freerunning</p>
-<p><input type="checkbox"/>basketball</p>
+<form role="form">
+    <div class="form-group">
+        <label>Event title</label>
+        <input class="form-control" type="text" placeholder="Event title..." value="" name="eventTitle">
+        <label>Description</label>
+        <textarea class="form-control" placeholder="Description..."></textarea>
+        <div class="checkbox">
+            <label><input type="checkbox"/>biketrial</label>
+        </div>
+        <div class="checkbox">
+            <label><input type="checkbox"/>skatebording</label>
+        </div>
+        <div class="checkbox">
+            <label><input type="checkbox"/>freerunning</label>
+        </div>
+        <div class="checkbox">
+            <label><input type="checkbox"/>basketball</label>
+        </div>
+        
+    </div>
+</form>
 <div id="newEventMap"></div>
-<div><input type="submit" name="Add" value="Add"></div>
+<button type="submit" class="btn btn-default btn-primary">Submit</button>

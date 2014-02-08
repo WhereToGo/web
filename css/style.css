@@ -136,3 +136,7 @@ body {
 #newEvent{
     position:absolute;
 }
+.newEvent{
+    width:50%;
+    padding-right:10px;
+}
