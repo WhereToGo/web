@@ -10,6 +10,10 @@ define [
     className: 'loginView'
     template: template
     template = null
+
+    initialize: ()->
+      super
+      @delegate 'submit', 'form', @join
     
     join: (e) =>
       e.preventDefault()

@@ -22,6 +22,11 @@ define(['views/base/view', 'text!templates/user/login.hbs'], function(View, temp
 
     template = null;
 
+    LoginView.prototype.initialize = function() {
+      LoginView.__super__.initialize.apply(this, arguments);
+      return this.delegate('submit', 'form', this.join);
+    };
+
     LoginView.prototype.join = function(e) {
       var formData;
       e.preventDefault();
