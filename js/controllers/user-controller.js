@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['controllers/base/controller', 'auth', 'models/user', 'views/user/login'], function(Controller, Auth, User, Login) {
+define(['controllers/base/controller', 'auth', 'models/base/model', 'models/user', 'views/user/login', 'views/user/edit'], function(Controller, Auth, Model, User, Login, Edit) {
   'use strict';
   var UserController;
   return UserController = (function(_super) {
@@ -42,7 +42,18 @@ define(['controllers/base/controller', 'auth', 'models/user', 'views/user/login'
     };
 
     UserController.prototype.edit = function(params) {
-      return this;
+      this.model = new Model;
+      return this.model.fetch({
+        url: 'http://wtgser.azurewebsites.net/api/users/getuser?user_id=1',
+        success: (function(_this) {
+          return function() {
+            return _this.view = new Edit({
+              model: _this.model,
+              region: 'main'
+            });
+          };
+        })(this)
+      });
     };
 
     return UserController;
