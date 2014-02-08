@@ -1,0 +1,36 @@
+{
+	"id": 0,
+	"login": "vpotravnyy",
+	"name": "Vyatcheslav Potravnyy",
+	"interests": [
+		{
+			"id":0,
+			"name": "Skate",
+			"path": "skate"
+		},
+		{
+			"id":1,
+			"name": "Parkour",
+			"path": "parkour"
+		},
+		{
+			"id":2,
+			"name": "Bike",
+			"path": "bike"
+		},
+		{
+			"id":3,
+			"name": "Running",
+			"path": "running"
+		},
+		{
+			"id":4,
+			"name": "Pickup",
+			"path": "pickup"
+		}
+	],
+	"last_location": {
+		"lat": 46.480901,
+		"lng": 30.755836
+	}
+}

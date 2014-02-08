@@ -3,9 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>WTG</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css" >
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" >
-  <script src="bower_components/requirejs/require.js"></script>
+    <script src="bower_components/requirejs/require.js"></script>
   <script>
   // Configure the AMD module loader
   requirejs.config({
@@ -18,7 +16,8 @@
       backbone: '../bower_components/backbone/backbone',
       handlebars: '../bower_components/handlebars/handlebars',
       text: '../bower_components/requirejs-text/text',
-      chaplin: '../bower_components/chaplin/chaplin'
+      chaplin: '../bower_components/chaplin/chaplin',
+      bootstrap: '../bower_components/bootstrap/dist/js/bootstrap.min.js'
     },
     // Underscore and Backbone are not AMD-capable per default,
     // so we need to use the AMD wrapping of RequireJS
@@ -45,5 +44,8 @@
   });
   </script>
 </head>
-<body></body>
+<body>
+  
+
+</body>
 </html>
