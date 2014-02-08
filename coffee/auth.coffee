@@ -4,7 +4,7 @@ define ['singleton'], (Singleton) ->
   class Auth extends Singleton
     token: ""
 
-    constructor: ()->
+    init: ()->
       @token = @load()
 
     isLogged: -> !!@token

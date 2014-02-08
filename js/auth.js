@@ -9,8 +9,6 @@ define(['singleton'], function(Singleton) {
   return Auth = (function(_super) {
     __extends(Auth, _super);
 
-    Auth.prototype.token = "";
-
     function Auth() {
       this.save = __bind(this.save, this);
       this.load = __bind(this.load, this);
@@ -18,8 +16,14 @@ define(['singleton'], function(Singleton) {
       this.tryToLogin = __bind(this.tryToLogin, this);
       this.logout = __bind(this.logout, this);
       this.login = __bind(this.login, this);
-      this.token = this.load();
+      return Auth.__super__.constructor.apply(this, arguments);
     }
+
+    Auth.prototype.token = "";
+
+    Auth.prototype.init = function() {
+      return this.token = this.load();
+    };
 
     Auth.prototype.isLogged = function() {
       return !!this.token;

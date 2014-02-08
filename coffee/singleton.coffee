@@ -2,7 +2,14 @@ define ()->
   'use strict'
 
   class Singleton
-    instance = undefined
+    instance = null    
    
-    @get : ->
-      instance ?= new @
+    @get: ->
+      if not @instance?
+        instance = new @
+        instance.init()
+      
+      instance
+   
+    init: (name = "unknown") ->
+      console.log "#{name} initialized"

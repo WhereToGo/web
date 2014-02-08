@@ -113,7 +113,4 @@ body {
   left:0;
   right:0;
   bottom:0;
-  -webkit-filter: saturate(3);
-  -moz-filter: saturate(3);
-  filter: saturate(3);
 }

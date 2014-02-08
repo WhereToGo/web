@@ -1,8 +1,8 @@
 define [
   'views/base/view'
   'text!templates/main/index.hbs'
-  'async!http://maps.google.com/maps/api/js?sensor=true&key=AIzaSyAU43H9HS_S0p94SLnuU-oxadj6tzdUXx0'
-], (View, template) ->
+  'geo'
+], (View, template, Geo) ->
   'use strict'
 
   class IndexView extends View
@@ -14,15 +14,18 @@ define [
     
     initialize: =>
       super
+      @geo = Geo.get()
+      
     
     attach: ()->
       super
-      @createMap()
+      @createMap new google.maps.LatLng @geo.firstCoords.lat, @geo.firstCoords.lng
+      @geo.getCoords (position)=>
+        latlng = new google.maps.LatLng position.coords.latitude, position.coords.longitude
+        @map.setCenter latlng
 
 
-    createMap: ()=>
-      startCoords = @getCoords()
-
+    createMap: (startCoords)=>
       mapOptions = 
         zoom: 14,
         center: startCoords,
@@ -34,39 +37,18 @@ define [
 
       @map = new google.maps.Map @$el.find("#mapView")[0], mapOptions 
 
-    getCoords: ()=>
-      new google.maps.LatLng 46.48048, 30.756235
+      @me = new google.maps.Marker
+        position: startCoords,
+        map: @map,
+        title: "You are here!"
 
-    setMapCenter: (LatLng)=>
+    setCenter: (LatLng) =>
+      @map.setCenter LatLng
+      @me.setPosition LatLng
 
     addMarker: (LatLng)=>
 
-        
-    afterRenderOld: =>
-      #geolocation
-      x = document.getElementById('main-container')
-      getLocation = =>
-        if navigator.geolocation
-          navigator.geolocation.getCurrentPosition showPosition, showError
-        else
-          x.innerHTML = "Geolocation is not supported by this browser."
-        return
-      showPosition = (position) =>
-        latlon = position.coords.latitude + "," + position.coords.longitude
-        img_url = "http://maps.googleapis.com/maps/api/staticmap?center=" + latlon + "&zoom=14&size=540x180&sensor=false"
-        x.innerHTML = "<img class='map' src='" + img_url + "'>"
-        return
-      showError = (error) =>
-        switch error.code
-          when error.PERMISSION_DENIED
-            x.innerHTML = "User denied the request for Geolocation."
-          when error.POSITION_UNAVAILABLE
-            x.innerHTML = "Location information is unavailable."
-          when error.TIMEOUT
-            x.innerHTML = "The request to get user location timed out."
-          when error.UNKNOWN_ERROR
-            x.innerHTML = "An unknown error occurred."
-              
-      getLocation();
+    
+
          
                     
