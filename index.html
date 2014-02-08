@@ -21,7 +21,7 @@
       handlebars: '../bower_components/handlebars/handlebars',
       text: '../bower_components/requirejs-text/text',
       chaplin: '../bower_components/chaplin/chaplin',
-      bootstrap: '../bower_components/bootstrap/dist/js/bootstrap.min.js'
+      bootstrap: '../bower_components/bootstrap/dist/js/bootstrap.min'
     },
     // Underscore and Backbone are not AMD-capable per default,
     // so we need to use the AMD wrapping of RequireJS
@@ -32,6 +32,9 @@
       backbone: {
         deps: ['underscore', 'jquery'],
         exports: 'Backbone'
+      },
+      bootstrap: {
+        deps: ['jquery']
       },
       handlebars: {
         exports: 'Handlebars'

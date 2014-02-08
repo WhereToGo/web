@@ -1,5 +1,6 @@
 define [
   'chaplin'
+  'bootstrap'
 ], (Chaplin) ->
   'use strict'
 

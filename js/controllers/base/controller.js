@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['chaplin', 'views/site-view'], function(Chaplin, SiteView) {
+define(['chaplin', 'views/site-view', 'views/header-view'], function(Chaplin, SiteView, HeaderView) {
   'use strict';
   var Controller;
   return Controller = (function(_super) {
@@ -13,7 +13,10 @@ define(['chaplin', 'views/site-view'], function(Chaplin, SiteView) {
     }
 
     Controller.prototype.beforeAction = function() {
-      return this.reuse('site', SiteView);
+      this.reuse('site', SiteView);
+      return this.reuse('header', HeaderView, {
+        region: 'header'
+      });
     };
 
     return Controller;
