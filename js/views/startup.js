@@ -7,8 +7,6 @@ define(['views/base/view', 'text!templates/startup.hbs'], function(View, templat
   'use strict';
   var Startup;
   return Startup = (function(_super) {
-    var showError;
-
     __extends(Startup, _super);
 
     function Startup() {
@@ -31,40 +29,40 @@ define(['views/base/view', 'text!templates/startup.hbs'], function(View, templat
     };
 
     Startup.prototype.afterRender = function() {
-      var showPosition;
-      ({
-        getLocation: (function(_this) {
-          return function() {
-            if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(showPosition, showError);
-              alert(9);
-            } else {
-              alert("Geolocation is not supported by this browser.");
-            }
-          };
-        })(this)
-      });
+      var getLocation, showError, showPosition, x;
+      x = document.getElementById('main-container');
+      getLocation = (function(_this) {
+        return function() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+          } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+          }
+        };
+      })(this);
       showPosition = (function(_this) {
         return function(position) {
           var img_url, latlon;
           latlon = position.coords.latitude + "," + position.coords.longitude;
-          img_url = "http://maps.googleapis.com/maps/api/staticmap?center=" + latlon + "&zoom=14&size=400x300&sensor=false";
-          return document.getElementById("mapholder").innerHTML = "<img src='" + img_url + "'>";
+          img_url = "http://maps.googleapis.com/maps/api/staticmap?center=" + latlon + "&zoom=14&size=540x180&sensor=false";
+          x.innerHTML = "<img class='map' src='" + img_url + "'>";
         };
       })(this);
-    };
-
-    showError = function(error) {
-      switch (error.code) {
-        case error.PERMISSION_DENIED:
-          return alert("User denied the request for Geolocation.");
-        case error.POSITION_UNAVAILABLE:
-          return alert("Location information is unavailable.");
-        case error.TIMEOUT:
-          return alert("The request to get user location timed out.");
-        case error.UNKNOWN_ERROR:
-          return alert("An unknown error occurred.");
-      }
+      showError = (function(_this) {
+        return function(error) {
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              return x.innerHTML = "User denied the request for Geolocation.";
+            case error.POSITION_UNAVAILABLE:
+              return x.innerHTML = "Location information is unavailable.";
+            case error.TIMEOUT:
+              return x.innerHTML = "The request to get user location timed out.";
+            case error.UNKNOWN_ERROR:
+              return x.innerHTML = "An unknown error occurred.";
+          }
+        };
+      })(this);
+      return getLocation();
     };
 
     return Startup;
