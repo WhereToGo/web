@@ -1,22 +1,11 @@
 body { 
-
+    background:#fff;        
 }
   .header {
-    width: 551px;
-    margin: 0 auto;
-    padding: 5px;
-    font-size: 24px;
-    background-color: #fff;
-    border-bottom: 2px solid #427684;
-    font-weight: 300;
-    font-size: 1.25rem;
-    line-height: 1.2;
   }
   .header-link {
     display: inline-block;
     text-decoration: none;
-    color: #3f894a;
-    padding: 4px 15px;
   }
   .header-link.last-link {
     padding-left: 9px;
@@ -41,8 +30,10 @@ body {
     margin: 0 auto;
     padding: 5px;
     margin-bottom: 0.5em;
-    color: #fff;
-    background-color: #7fc4d6;
+    color: #6E1E77;
+    background-color: #fff;
+    border:1px solid #6E1E77;
+    border-radius:15px;
   }
 
   * {
@@ -50,3 +41,31 @@ body {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
+.home-page h1{
+    text-align:center;
+}
+.home-page p{
+    text-align:center
+}
+.loginFields p{
+    text-align:left;   
+}
+.loginFields{
+    margin-left:auto;
+    margin-right:auto;
+    max-width:200px;
+}
+.loginFields .userNameInput{
+    width:200px;
+}
+.loginFields input{
+    padding:0;
+    margin:0;
+    border:0;
+}
+.loginFields .ckBox{
+    padding:0;
+    margin:0;
+    border:0;
+    
+}
