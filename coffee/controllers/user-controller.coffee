@@ -1,9 +1,11 @@
 define [
   'controllers/base/controller'
   'auth'
+  'models/base/model'
   'models/user'
   'views/user/login'
-], (Controller, Auth, User, Login) ->
+  'views/user/edit'
+], (Controller, Auth, Model, User, Login, Edit) ->
   'use strict'
 
   class UserController extends Controller
@@ -23,4 +25,9 @@ define [
       @auth.logout()
       @redirectTo url: "login"
 
-    edit: (params) -> @
+    edit: (params) ->
+      @model = new Model
+      @model.fetch
+        url:'http://wtgser.azurewebsites.net/api/users/getuser?user_id=1'
+        success:()=>
+          @view = new Edit model: @model , region: 'main'
