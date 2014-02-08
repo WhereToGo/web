@@ -18,6 +18,8 @@ body {
     top: 0; left: 0; right:0;
     background: #3D0C42;
     margin-bottom: 0;
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,0.7);
     box-shadow: 0 0 10px rgba(0,0,0,0.7);
   }
   #header .navbar .navbar-toggle:hover, 
@@ -96,6 +98,10 @@ body {
     border-right: 1px solid #3D0C42;
     border-left: 1px solid #3D0C42;
     padding-top: 51px;
+    
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,0.7);
+    box-shadow: 0 0 10px rgba(0,0,0,0.7);
   }
   .page-container {
     height:100%;

@@ -1,12 +1,13 @@
 define [
   'controllers/base/controller'
-  'models/user'
+  # 'models/events-collection'
   'views/main/index'
-], (Controller, UserModel, IndexView) ->
+], (Controller, IndexView) ->
   'use strict'
 
   class MainController extends Controller
 
     index: (params) ->
-      @model = new UserModel()
-      @view = new IndexView model: @model, region: 'main'
+      # @collection = new EventsCollection()
+      # @view = new IndexView collection: @collection, region: 'main'
+      @view = new IndexView region: 'main'
