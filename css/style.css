@@ -58,14 +58,7 @@ body {
 .loginFields .userNameInput{
     width:200px;
 }
-.loginFields input{
-    padding:0;
-    margin:0;
-    border:0;
-}
-.loginFields .ckBox{
-    padding:0;
-    margin:0;
-    border:0;
-    
+.ckBox{
+    line-height: 20px;
+    vertical-align: top;   
 }
