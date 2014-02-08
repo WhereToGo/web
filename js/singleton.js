@@ -7,10 +7,21 @@ define(function() {
 
     function Singleton() {}
 
-    instance = void 0;
+    instance = null;
 
     Singleton.get = function() {
-      return instance != null ? instance : instance = new this;
+      if (this.instance == null) {
+        instance = new this;
+        instance.init();
+      }
+      return instance;
+    };
+
+    Singleton.prototype.init = function(name) {
+      if (name == null) {
+        name = "unknown";
+      }
+      return console.log("" + name + " initialized");
     };
 
     return Singleton;

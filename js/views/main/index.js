@@ -3,17 +3,15 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/view', 'text!templates/main/index.hbs', 'async!http://maps.google.com/maps/api/js?sensor=true&key=AIzaSyAU43H9HS_S0p94SLnuU-oxadj6tzdUXx0'], function(View, template) {
+define(['views/base/view', 'text!templates/main/index.hbs', 'geo'], function(View, template, Geo) {
   'use strict';
   var IndexView;
   return IndexView = (function(_super) {
     __extends(IndexView, _super);
 
     function IndexView() {
-      this.afterRenderOld = __bind(this.afterRenderOld, this);
       this.addMarker = __bind(this.addMarker, this);
-      this.setMapCenter = __bind(this.setMapCenter, this);
-      this.getCoords = __bind(this.getCoords, this);
+      this.setCenter = __bind(this.setCenter, this);
       this.createMap = __bind(this.createMap, this);
       this.initialize = __bind(this.initialize, this);
       return IndexView.__super__.constructor.apply(this, arguments);
@@ -28,17 +26,24 @@ define(['views/base/view', 'text!templates/main/index.hbs', 'async!http://maps.g
     template = null;
 
     IndexView.prototype.initialize = function() {
-      return IndexView.__super__.initialize.apply(this, arguments);
+      IndexView.__super__.initialize.apply(this, arguments);
+      return this.geo = Geo.get();
     };
 
     IndexView.prototype.attach = function() {
       IndexView.__super__.attach.apply(this, arguments);
-      return this.createMap();
+      this.createMap(new google.maps.LatLng(this.geo.firstCoords.lat, this.geo.firstCoords.lng));
+      return this.geo.getCoords((function(_this) {
+        return function(position) {
+          var latlng;
+          latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          return _this.map.setCenter(latlng);
+        };
+      })(this));
     };
 
-    IndexView.prototype.createMap = function() {
-      var mapOptions, startCoords;
-      startCoords = this.getCoords();
+    IndexView.prototype.createMap = function(startCoords) {
+      var mapOptions;
       mapOptions = {
         zoom: 14,
         center: startCoords,
@@ -52,53 +57,20 @@ define(['views/base/view', 'text!templates/main/index.hbs', 'async!http://maps.g
         },
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
-      return this.map = new google.maps.Map(this.$el.find("#mapView")[0], mapOptions);
+      this.map = new google.maps.Map(this.$el.find("#mapView")[0], mapOptions);
+      return this.me = new google.maps.Marker({
+        position: startCoords,
+        map: this.map,
+        title: "You are here!"
+      });
     };
 
-    IndexView.prototype.getCoords = function() {
-      return new google.maps.LatLng(46.48048, 30.756235);
+    IndexView.prototype.setCenter = function(LatLng) {
+      this.map.setCenter(LatLng);
+      return this.me.setPosition(LatLng);
     };
-
-    IndexView.prototype.setMapCenter = function(LatLng) {};
 
     IndexView.prototype.addMarker = function(LatLng) {};
-
-    IndexView.prototype.afterRenderOld = function() {
-      var getLocation, showError, showPosition, x;
-      x = document.getElementById('main-container');
-      getLocation = (function(_this) {
-        return function() {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition, showError);
-          } else {
-            x.innerHTML = "Geolocation is not supported by this browser.";
-          }
-        };
-      })(this);
-      showPosition = (function(_this) {
-        return function(position) {
-          var img_url, latlon;
-          latlon = position.coords.latitude + "," + position.coords.longitude;
-          img_url = "http://maps.googleapis.com/maps/api/staticmap?center=" + latlon + "&zoom=14&size=540x180&sensor=false";
-          x.innerHTML = "<img class='map' src='" + img_url + "'>";
-        };
-      })(this);
-      showError = (function(_this) {
-        return function(error) {
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              return x.innerHTML = "User denied the request for Geolocation.";
-            case error.POSITION_UNAVAILABLE:
-              return x.innerHTML = "Location information is unavailable.";
-            case error.TIMEOUT:
-              return x.innerHTML = "The request to get user location timed out.";
-            case error.UNKNOWN_ERROR:
-              return x.innerHTML = "An unknown error occurred.";
-          }
-        };
-      })(this);
-      return getLocation();
-    };
 
     return IndexView;
 

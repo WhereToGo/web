@@ -87,7 +87,6 @@ body {
   }
 
 
-
   .outer-page-container {
     max-width: 1000px;
     height:100%;
@@ -107,15 +106,21 @@ body {
 
 
 
-#mapView {
+#mapView{
   position: absolute;
   top:0;
   left:0;
   right:0;
   bottom:0;
-  -webkit-filter: saturate(3);
-  -moz-filter: saturate(3);
-  filter: saturate(3);
+}
+
+#newEventMap{
+  position: absolute;
+  top:0;
+  right:0;
+  height:50%;
+    width:50%;
+    
 }
 .addEvent{
     position:absolute;
