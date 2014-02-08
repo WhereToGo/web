@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['chaplin', 'bootstrap'], function(Chaplin) {
+define(['chaplin', 'bootstrap', 'serializeObject'], function(Chaplin) {
   'use strict';
   var Application;
   return Application = (function(_super) {
@@ -12,7 +12,15 @@ define(['chaplin', 'bootstrap'], function(Chaplin) {
       return Application.__super__.constructor.apply(this, arguments);
     }
 
-    Application.prototype.title = 'Chaplin example application';
+    Application.prototype.title = 'Where To Go?';
+
+    Application.prototype.initRouter = function(routes, options) {
+      if (options == null) {
+        options = {};
+      }
+      options.pushState = false;
+      return Application.__super__.initRouter.call(this, routes, options);
+    };
 
     return Application;
 

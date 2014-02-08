@@ -3,35 +3,13 @@ html, body, #site-container {
 }
 body { 
     background:
-      radial-gradient(#ccc 15%, transparent 16%) 0 0,
-      radial-gradient(#ccc 15%, transparent 16%) 8px 8px,
+      radial-gradient(#C1AAC4 15%, transparent 16%) 0 0,
+      radial-gradient(#C1AAC4 15%, transparent 16%) 8px 8px,
       radial-gradient(rgba(255,255,255,0.8) 15%, transparent 20%) 0 1px,
       radial-gradient(rgba(255,255,255,0.8) 15%, transparent 20%) 8px 9px;
     background-color:#ddd;
     background-size:16px 16px;        
 }
-  .header {
-  }
-  .header-link {
-    display: inline-block;
-    text-decoration: none;
-  }
-  .header-link.last-link {
-    padding-left: 9px;
-  }
-  .header-link:visited {
-    color: #3f894a;
-  }
-  .header-link:hover {
-    color: #27552e;
-    border-color: #27552e;
-  }
-  .header ul {
-    margin: 5px 0;
-  }
-  .header li {
-    display: inline;
-  }
 
 
   /*header*/
@@ -126,32 +104,6 @@ body {
 
   }
 
-
-
-
-  .home-page {
-    width: 551px;
-    height: 275px;
-    margin: 0 auto;
-    padding: 5px;
-    margin-bottom: 0.5em;
-    color: #6E1E77;
-    background-color: #fff;
-    border:1px solid #6E1E77;
-    border-radius:15px;
-  }
-
-  * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-  }
-.home-page h1{
-    text-align:center;
-}
-.home-page p{
-    text-align:center
-}
 .loginFields p{
     text-align:left;   
 }

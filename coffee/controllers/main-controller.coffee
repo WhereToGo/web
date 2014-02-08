@@ -1,11 +1,12 @@
 define [
   'controllers/base/controller'
   'models/user'
-  'views/login'
-], (Controller, User, Login) ->
+  'views/main/index'
+], (Controller, UserModel, IndexView) ->
   'use strict'
 
-  class HelloController extends Controller
-    login: (params) ->
-        @model = new User()
-        @view = new Login model: @model, region: 'main'
+  class MainController extends Controller
+
+    index: (params) ->
+        @model = new UserModel()
+        @view = new IndexView model: @model, region: 'main'

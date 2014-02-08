@@ -2,6 +2,12 @@
 define(function() {
   'use strict';
   return function(match) {
-    return match('', 'main#login');
+    match('', 'main#index');
+    match('login', 'user#login');
+    match('logout', 'user#logout');
+    match('profile', 'user#edit');
+    match('settings', 'user#edit');
+    match('new', 'events#add');
+    return match('event/:id', 'events#show');
   };
 });
