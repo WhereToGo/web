@@ -132,38 +132,41 @@ body {
   margin-left:-10px;
     
 }
-.addEvent{
-  width: 122px;
-  height:122px;
+
+#addEvent{
+  display: block;
+  width: 142px;
+  height:61px;
+  padding: 0 10px;
   position:absolute;
-  bottom:5px;
+  bottom:0px;
   left:50%;
   margin-left: -61px;
   z-index:9999px;
+  overflow: hidden;
+
+  -webkit-transition: bottom 0.5s, height 0.5s;;
+  -moz-transition: bottom 0.5s, height 0.5s;;
+  -ms-transition: bottom 0.5s, height 0.5s;;
+  -o-transition: bottom 0.5s, height 0.5s;;
+  transition: bottom 0.5s, height 0.5s;;
+}
+#addEvent a {
+  display: block;
+  width: 122px;
+  height:122px;
   background: url(../i/new_circle.png) -3px -2px no-repeat;
   background-size: 128px 128px;
   border-radius: 100%;
 
-  opacity: 0.5;
-
   -webkit-box-shadow: 0 5px 10px rgba(0,0,0,0.7);
   -moz-box-shadow: 0 5px 10px rgba(0,0,0,0.7);
   box-shadow: 0 5px 10px rgba(0,0,0,0.7);
+}
+#addEvent:hover, #addEvent:focus {
+  height: 142px;
+}
 
-  -webkit-transition: bottom 0.5s, opacity 0.5s;
-  -moz-transition: bottom 0.5s, opacity 0.5s;
-  -ms-transition: bottom 0.5s, opacity 0.5s;
-  -o-transition: bottom 0.5s, opacity 0.5s;
-  transition: bottom 0.5s, opacity 0.5s;
-    
-}
-.addEvent:hover, .addEvent:focus {
-  bottom:20px;
-  opacity: 1;
-}
-.addEvent:hover:active, .addEvent:focus:active {
-  bottom: 19px;
-}
 #newEvent{
     position:absolute;
 }
