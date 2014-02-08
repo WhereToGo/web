@@ -4,7 +4,7 @@ define [
 ], (View, template) ->
   'use strict'
 
-  class HelloWorldView extends View
+  class Login extends View
     # Automatically render after initialize.
     autoRender: true
     className: 'hello-world'
@@ -17,12 +17,4 @@ define [
     
     initialize: ->
         #test request to backend
-        
-        #alert('hi');
-        $.ajax(
-            url: "http://192.168.187.1:2200"
-            context: document.body
-        ).done ->
-            alert '2'
-            return
 

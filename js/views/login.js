@@ -4,32 +4,25 @@ var __hasProp = {}.hasOwnProperty,
 
 define(['views/base/view', 'text!templates/login.hbs'], function(View, template) {
   'use strict';
-  var HelloWorldView;
-  return HelloWorldView = (function(_super) {
-    __extends(HelloWorldView, _super);
+  var Login;
+  return Login = (function(_super) {
+    __extends(Login, _super);
 
-    function HelloWorldView() {
-      return HelloWorldView.__super__.constructor.apply(this, arguments);
+    function Login() {
+      return Login.__super__.constructor.apply(this, arguments);
     }
 
-    HelloWorldView.prototype.autoRender = true;
+    Login.prototype.autoRender = true;
 
-    HelloWorldView.prototype.className = 'hello-world';
+    Login.prototype.className = 'hello-world';
 
-    HelloWorldView.prototype.template = template;
+    Login.prototype.template = template;
 
     template = null;
 
-    HelloWorldView.prototype.initialize = function() {
-      return $.ajax({
-        url: "http://192.168.187.1:2200",
-        context: document.body
-      }).done(function() {
-        alert('2');
-      });
-    };
+    Login.prototype.initialize = function() {};
 
-    return HelloWorldView;
+    return Login;
 
   })(View);
 });
