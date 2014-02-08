@@ -32,6 +32,9 @@ define(['chaplin', 'views/base/view', 'text!templates/main/index.hbs', 'geo'], f
 
     IndexView.prototype.attach = function() {
       IndexView.__super__.attach.apply(this, arguments);
+      $('#addEvent').css({
+        'display': 'block'
+      });
       this.createMap(new google.maps.LatLng(this.geo.firstCoords.lat, this.geo.firstCoords.lng));
       return this.geo.getCoords((function(_this) {
         return function(position) {

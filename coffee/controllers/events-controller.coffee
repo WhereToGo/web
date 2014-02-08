@@ -9,3 +9,4 @@ define [
 
     add:=>
         @view = new newEvent region:'main'
+        

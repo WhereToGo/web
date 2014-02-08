@@ -20,6 +20,7 @@ define [
     
     attach: ()->
       super
+      $('#addEvent').css('display' : 'block')
       @createMap new google.maps.LatLng @geo.firstCoords.lat, @geo.firstCoords.lng
       @geo.getCoords (position)=>
         latlng = new google.maps.LatLng position.coords.latitude, position.coords.longitude

@@ -36,6 +36,9 @@ define(['views/base/view', 'text!templates/events/new.hbs', 'geo'], function(Vie
 
     newEvent.prototype.attach = function() {
       newEvent.__super__.attach.apply(this, arguments);
+      $('#addEvent').css({
+        'display': 'none'
+      });
       this.createMap(new google.maps.LatLng(this.geo.firstCoords.lat, this.geo.firstCoords.lng));
       return this.geo.getCoords((function(_this) {
         return function(position) {
