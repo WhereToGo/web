@@ -1,6 +1,7 @@
 define [
   'views/base/view'
   'text!templates/main/index.hbs'
+  'async!http://maps.google.com/maps/api/js?sensor=true&key=AIzaSyAU43H9HS_S0p94SLnuU-oxadj6tzdUXx0'
 ], (View, template) ->
   'use strict'
 
@@ -13,10 +14,35 @@ define [
     
     initialize: =>
       super
-      @afterRender()
+    
+    attach: ()->
+      super
+      @createMap()
+
+
+    createMap: ()=>
+      startCoords = @getCoords()
+
+      mapOptions = 
+        zoom: 14,
+        center: startCoords,
+        mapTypeControl: true,
+        mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+        navigationControl: true,
+        navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+
+      @map = new google.maps.Map @$el.find("#mapView")[0], mapOptions 
+
+    getCoords: ()=>
+      new google.maps.LatLng 46.48048, 30.756235
+
+    setMapCenter: (LatLng)=>
+
+    addMarker: (LatLng)=>
+
         
-        
-    afterRender: =>
+    afterRenderOld: =>
       #geolocation
       x = document.getElementById('main-container')
       getLocation = =>

@@ -8,5 +8,5 @@ define [
   class MainController extends Controller
 
     index: (params) ->
-        @model = new UserModel()
-        @view = new IndexView model: @model, region: 'main'
+      @model = new UserModel()
+      @view = new IndexView model: @model, region: 'main'
