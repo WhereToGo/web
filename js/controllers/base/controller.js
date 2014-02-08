@@ -31,6 +31,12 @@ define(['chaplin', 'auth', 'views/site-view', 'views/header-view'], function(Cha
           return false;
         }
       }
+      if (auth.isLogged() && /login|register/.test(route.path)) {
+        this.redirectTo({
+          url: '/'
+        });
+        return false;
+      }
       return true;
     };
 

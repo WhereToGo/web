@@ -15,6 +15,11 @@ define ['chaplin', 'auth', 'views/site-view', 'views/header-view'], (Chaplin, Au
 
       if not /login|register/.test route.path
         if not auth.isLogged()
-          @redirectTo {url: '/login'}
+          @redirectTo url: '/login'
           return false
+
+      if auth.isLogged() and /login|register/.test route.path
+        @redirectTo url: '/'
+        return false
+
       true
