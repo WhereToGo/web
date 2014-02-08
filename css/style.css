@@ -124,6 +124,14 @@ body {
     width:50%;
     
 }
+#EventMap{
+    width:100%;
+    position: absolute;
+    bottom:0;
+    height:50%;
+    margin-left:-10px;
+    
+}
 #addEvent{
     display:none;
 }
