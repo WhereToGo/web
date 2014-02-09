@@ -24,15 +24,35 @@ define(['views/base/view', 'text!templates/user/login.hbs'], function(View, temp
 
     LoginView.prototype.initialize = function() {
       LoginView.__super__.initialize.apply(this, arguments);
-      return this.delegate('submit', 'form', this.join);
+      this.delegate('submit', 'form', this.join);
+      return this.delegate('input focus', '.has-error #inputPassword', (function(_this) {
+        return function() {
+          return _this.$el.find("#inputPassword").closest(".form-group").removeClass("has-error");
+        };
+      })(this));
     };
 
     LoginView.prototype.join = function(e) {
       var formData;
       e.preventDefault();
       formData = $(e.target).serializeObject();
-      this.publishEvent("logged", formData);
-      return console.log("view - event sent");
+      return $.ajax({
+        url: "http://wtgser.azurewebsites.net/api/users/postme",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(formData),
+        error: (function(_this) {
+          return function() {
+            return _this.$el.find("#inputPassword").closest(".form-group").addClass("has-error");
+          };
+        })(this),
+        success: (function(_this) {
+          return function(user) {
+            formData.id = JSON.parse(user)["user_id"];
+            return _this.publishEvent("logged", formData);
+          };
+        })(this)
+      });
     };
 
     return LoginView;

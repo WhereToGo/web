@@ -14,15 +14,20 @@ define [
     initialize: ()->
       super
       @delegate 'submit', 'form', @join
+      @delegate 'input focus', '.has-error #inputPassword', ()=>
+        @$el.find("#inputPassword").closest(".form-group").removeClass "has-error"
     
     join: (e) =>
       e.preventDefault()
       formData = $(e.target).serializeObject()
-      # @model.save formData, {
-      #   success: (model)=>
-      #     @publishEvent "logged", model
-      #   error: (data)=>
-      #     alert JSON.stringify data
-      # }
-      @publishEvent "logged", formData
-      console.log "view - event sent"
+
+      $.ajax
+        url: "http://wtgser.azurewebsites.net/api/users/postme"
+        type: "POST"
+        contentType: "application/json"
+        data:JSON.stringify formData
+        error: () =>
+          @$el.find("#inputPassword").closest(".form-group").addClass "has-error"
+        success: (user) =>
+          formData.id = JSON.parse(user)["user_id"]
+          @publishEvent "logged", formData

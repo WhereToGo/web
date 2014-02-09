@@ -253,3 +253,18 @@ body {
   bottom: 0;
   right: 0;
 }
+
+
+#inputLogin, #inputPassword {
+  display: inline-block;
+  width: 270px;
+  margin-right: 10px;
+}
+
+#inputPassword + .bang {
+  display: none;
+  color: #a94442;
+}
+.has-error #inputPassword + .bang {
+  display: inline-block;
+}

@@ -11,6 +11,7 @@ define(['singleton'], function(Singleton) {
 
     function Auth() {
       this.save = __bind(this.save, this);
+      this.loadID = __bind(this.loadID, this);
       this.load = __bind(this.load, this);
       this.createToken = __bind(this.createToken, this);
       this.tryToLogin = __bind(this.tryToLogin, this);
@@ -22,7 +23,8 @@ define(['singleton'], function(Singleton) {
     Auth.prototype.token = "";
 
     Auth.prototype.init = function() {
-      return this.token = this.load();
+      this.token = this.load();
+      return this.id = this.loadID();
     };
 
     Auth.prototype.isLogged = function() {
@@ -35,6 +37,7 @@ define(['singleton'], function(Singleton) {
       }
       if (this.tryToLogin(options)) {
         this.token = this.createToken(options);
+        this.id = options.id;
         this.save();
         return true;
       } else {
@@ -47,6 +50,7 @@ define(['singleton'], function(Singleton) {
         options = {};
       }
       this.token = "";
+      this.id = "";
       return this.save();
     };
 
@@ -54,22 +58,27 @@ define(['singleton'], function(Singleton) {
       if (options == null) {
         options = {};
       }
-      return !!options.username;
+      return !!options.login;
     };
 
     Auth.prototype.createToken = function(options) {
       if (options == null) {
         options = {};
       }
-      return options.username;
+      return options.login;
     };
 
     Auth.prototype.load = function() {
       return localStorage.getItem("auth");
     };
 
+    Auth.prototype.loadID = function() {
+      return localStorage.getItem("user_id");
+    };
+
     Auth.prototype.save = function() {
-      return localStorage.setItem("auth", this.token);
+      localStorage.setItem("auth", this.token);
+      return localStorage.setItem("user_id", this.id);
     };
 
     return Auth;

@@ -3,9 +3,10 @@ define [
   'views/base/view'
   'text!templates/events/new.hbs'
   'geo'
+  'auth'
   'moment'
   'DTPicker'
-], (Chaplin, View, template, Geo, moment) ->
+], (Chaplin, View, template, Geo, Auth, moment) ->
   'use strict'
 
   class newEvent extends View
@@ -19,6 +20,7 @@ define [
     initialize: =>
       super
       @geo = Geo.get()
+      @auth = Auth.get()
 
       @delegate 'submit', 'form', @submit
       @delegate 'input change', 'input', @validate
@@ -112,7 +114,7 @@ define [
         location:
           lat: fd.lat
           lng: fd.lng
-        user_id: 3 
+        user_id: @auth.id 
         int_id: parseInt fd.tag
         start_date: moment(@startDTP.data("DateTimePicker").getDate()).utc().format "YYYY/MM/DDTHH:mm:ss"
         end_date:   moment(@endDTP.data("DateTimePicker").getDate()).utc().format "YYYY/MM/DDTHH:mm:ss"
@@ -126,5 +128,5 @@ define [
         success: (result) ->
           Chaplin.utils.redirectTo url: "/"
         error: (jqXHR, textStatus, errorThrown) ->
-          consolo.log jqXHR
+          console.log jqXHR
           alert "Error"

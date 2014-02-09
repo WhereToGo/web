@@ -3,7 +3,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['chaplin', 'views/base/view', 'text!templates/events/new.hbs', 'geo', 'moment', 'DTPicker'], function(Chaplin, View, template, Geo, moment) {
+define(['chaplin', 'views/base/view', 'text!templates/events/new.hbs', 'geo', 'auth', 'moment', 'DTPicker'], function(Chaplin, View, template, Geo, Auth, moment) {
   'use strict';
   var newEvent;
   return newEvent = (function(_super) {
@@ -35,6 +35,7 @@ define(['chaplin', 'views/base/view', 'text!templates/events/new.hbs', 'geo', 'm
     newEvent.prototype.initialize = function() {
       newEvent.__super__.initialize.apply(this, arguments);
       this.geo = Geo.get();
+      this.auth = Auth.get();
       this.delegate('submit', 'form', this.submit);
       return this.delegate('input change', 'input', this.validate);
     };
@@ -153,7 +154,7 @@ define(['chaplin', 'views/base/view', 'text!templates/events/new.hbs', 'geo', 'm
           lat: fd.lat,
           lng: fd.lng
         },
-        user_id: 3,
+        user_id: this.auth.id,
         int_id: parseInt(fd.tag),
         start_date: moment(this.startDTP.data("DateTimePicker").getDate()).utc().format("YYYY/MM/DDTHH:mm:ss"),
         end_date: moment(this.endDTP.data("DateTimePicker").getDate()).utc().format("YYYY/MM/DDTHH:mm:ss")
@@ -169,7 +170,7 @@ define(['chaplin', 'views/base/view', 'text!templates/events/new.hbs', 'geo', 'm
           });
         },
         error: function(jqXHR, textStatus, errorThrown) {
-          consolo.log(jqXHR);
+          console.log(jqXHR);
           return alert("Error");
         }
       });

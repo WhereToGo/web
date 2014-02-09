@@ -6,12 +6,14 @@ define ['singleton'], (Singleton) ->
 
     init: ()->
       @token = @load()
+      @id = @loadID()
 
     isLogged: -> !!@token
 
     login: (options = {}) =>
       if @tryToLogin options
         @token = @createToken options
+        @id = options.id
         @save()
         return true
       else
@@ -19,15 +21,18 @@ define ['singleton'], (Singleton) ->
 
     logout: (options = {}) =>
       @token = ""
+      @id = ""
       @save()
 
 
-    tryToLogin: (options = {}) => !!options.username
+    tryToLogin: (options = {}) => !!options.login
 
-    createToken: (options = {}) => options.username
+    createToken: (options = {}) => options.login
 
 
-    load: () => localStorage.getItem "auth"
-    save: () => localStorage.setItem "auth", @token
-
+    load:   () => localStorage.getItem "auth"
+    loadID: () => localStorage.getItem "user_id"
+    save:   () => 
+      localStorage.setItem "auth", @token
+      localStorage.setItem "user_id", @id
 
