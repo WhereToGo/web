@@ -27,7 +27,7 @@ define [
 
     edit: (params) =>
       $.ajax
-        url: "http://wtgser.azurewebsites.net/api/users/getuser?user_id=1"
+        url: "http://wtgser.azurewebsites.net/api/users/get?id=1"
         cache: false
         beforeSend: ->
           #alert "Получаем контент"

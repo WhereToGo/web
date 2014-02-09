@@ -45,7 +45,7 @@ define(['controllers/base/controller', 'auth', 'models/base/model', 'models/user
 
     UserController.prototype.edit = function(params) {
       return $.ajax({
-        url: "http://wtgser.azurewebsites.net/api/users/getuser?user_id=1",
+        url: "http://wtgser.azurewebsites.net/api/users/get?id=1",
         cache: false,
         beforeSend: function() {},
         success: (function(_this) {

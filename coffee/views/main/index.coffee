@@ -5,7 +5,8 @@ define [
   'text!templates/main/index.hbs'
   'text!templates/main/popover.hbs'
   'geo'
-], (Chaplin, Handlebars, View, template, popoverTemplate, Geo) ->
+  'models/tags-collection'
+], (Chaplin, Handlebars, View, template, popoverTemplate, Geo, TagsCollection) ->
   'use strict'
 
   that = null
@@ -20,10 +21,16 @@ define [
     initialize: =>
       super
       @geo = Geo.get()
+      @tags = new TagsCollection()
       that = @
 
-      @collection.fetch
-        success: ()=> console.log @
+      window.collection = @tags
+
+      @tags.fetch
+        success: ()->
+          that.collection.fetch
+            success: (collection)->
+              that.addMarker model.attributes for model in collection.models
 
       
     
@@ -55,35 +62,18 @@ define [
 
       @markers = []
 
-      # test
-      setTimeout( ()=>
-        @addMarker({
-          id: 0,
-          title: "ololo1",
-          description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta, voluptatem facilis ipsa consequuntur itaque quisquam animi cupiditate voluptates deserunt porro cumque quis nesciunt. Impedit, possimus, nisi omnis consectetur nesciunt sed. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste, reiciendis, laudantium delectus quidem quos corrupti perspiciatis consequatur magni tempore accusantium consequuntur alias aut provident eius sit ratione excepturi officiis quasi. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, ratione, odio, fugiat quaerat velit nulla numquam neque repellat deleniti animi inventore maxime quia aut! Repudiandae dolores sequi reprehenderit perferendis eveniet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, quae, suscipit et expedita earum sequi alias deleniti at corporis corrupti iusto unde fugiat culpa natus doloribus ut quos sit voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque incidunt possimus nemo. Non, perferendis, incidunt, ipsam, atque dolorem illum laudantium quam aliquam eius esse ex molestias alias magnam modi voluptas? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, suscipit, optio ipsum est quam modi facere quaerat laudantium consequuntur consequatur quo odio totam expedita recusandae natus. Deserunt, velit quasi culpa. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, excepturi, accusantium, fugiat qui laboriosam velit quibusdam reiciendis asperiores fugit sint necessitatibus nulla ipsam ipsa est facere animi ducimus voluptas consequatur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, provident, mollitia, officiis, aliquam at laboriosam in officia quo earum reprehenderit quam iste qui id temporibus odit culpa labore vitae placeat.",
-          users: [
-            {id:0, name: "Vyatcheslav Potravnyy"}
-            {id:1, name: "Joe Lajoe"}
-            {id:2, name: "Lara Kroft"}
-            {id:3, name: "Sara Kerrigan"}
-            {id:0, name: "Vyatcheslav Potravnyy"}
-            {id:1, name: "Joe Lajoe"}
-            {id:2, name: "Lara Kroft"}
-            {id:3, name: "Sara Kerrigan"}
-          ]
-          path: "strike"
-        }, new google.maps.LatLng 46.46568, 30.756255)
-      , 3000)
-      # test
-
     setCenter: (LatLng) =>
       @map.setCenter LatLng
       @me.setPosition LatLng
 
 
-    addMarker: (model, LatLng)=>
+    addMarker: (attrs)=>
+      LatLng = new google.maps.LatLng attrs.location.lat, attrs.location.lng
+      tagId = attrs.int_id
+      tagId = 3 if tagId <3
+
       markerImage = new google.maps.MarkerImage(
-        '/i/tags/' + model.path + '.png',
+        '/i/tags/' + @tags.get(tagId).attributes.path + '.png',
         new google.maps.Size(60,60),
         new google.maps.Point(0,0),
         new google.maps.Point(30,30),
@@ -94,8 +84,8 @@ define [
         icon: markerImage,
         position: LatLng, 
         map: @map,
-        title: model.title,
-        model: model
+        title: attrs.title,
+        model: attrs
 
       google.maps.event.addListener marker, 'click', @openPopover
       @markers.push marker
@@ -109,13 +99,3 @@ define [
         position: @getPosition()
 
       infoWindow.open(that.map)
-
-
-
-        
-
-
-    
-
-         
-                    

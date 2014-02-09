@@ -1,10 +1,11 @@
 define [
+  'chaplin'
   'views/base/view'
   'text!templates/events/new.hbs'
   'geo'
   'moment'
   'DTpicker'
-], (View, template, Geo, moment) ->
+], (Chaplin, View, template, Geo, moment) ->
   'use strict'
 
   class newEvent extends View
@@ -18,6 +19,10 @@ define [
     initialize: =>
       super
       @geo = Geo.get()
+
+      @delegate 'submit', 'form', @submit
+      @delegate 'input change', 'input', @validate
+
         
     attach: ()->
       super
@@ -34,26 +39,26 @@ define [
 
 
     initDatePicker: ()=>
-      startDTP = @$el.find("#startDTPicker")
-      endDTP   = @$el.find("#endDTPicker")
+      @startDTP = @$el.find("#startDTPicker")
+      @endDTP   = @$el.find("#endDTPicker")
 
-      startDTP.datetimepicker
+      @startDTP.datetimepicker
         defaultDate: moment()
         endDate: moment().add "hours", 2
         useSeconds: false
 
-      endDTP.datetimepicker
+      @endDTP.datetimepicker
         defaultDate: moment().add "hours", 2
         startDate: moment()
         useSeconds: false
 
-      startDTP.on 'change.dp', (e)=>
+      @startDTP.on 'change.dp', (e)=>
         val = $(e.target).data("DateTimePicker").getDate()
-        endDTP.data("DateTimePicker").setStartDate val
+        @endDTP.data("DateTimePicker").setStartDate val
 
-      endDTP.on 'change.dp', (e)=>
+      @endDTP.on 'change.dp', (e)=>
         val = $(e.target).data("DateTimePicker").getDate()
-        startDTP.data("DateTimePicker").setEndDate val
+        @startDTP.data("DateTimePicker").setEndDate val
       
 
     createMap: (startCoords)=>
@@ -86,3 +91,39 @@ define [
       @$el.find(".inputLat").val LatLng.lat()
       @$el.find(".inputLng").val LatLng.lng()
 
+
+    validate: ()=>
+      canSave = true
+      canSave = false if $("#eventTitle").val().length is 0
+      start = moment @startDTP.data("DateTimePicker").getDate()
+      end   = moment @endDTP.data("DateTimePicker").getDate()
+      canSave = false if start >= end
+      @$el.find(".btn-submit").toggleClass "disabled", !canSave
+
+
+    submit: (e)=>
+      e.preventDefault()
+      fd = $(e.target).serializeObject()
+
+      data =
+        title: fd.title 
+        description: fd.description
+        location:
+          lat: fd.lat
+          lng: fd.lng
+        user_id: 3 
+        int_id: parseInt fd.tag
+        start_date: moment(@startDTP.data("DateTimePicker").getDate()).utc().format "YYYY/MM/DDTHH:mm:ss"
+        end_date:   moment(@endDTP.data("DateTimePicker").getDate()).utc().format "YYYY/MM/DDTHH:mm:ss"
+
+
+      $.ajax
+        url: "http://wtgser.azurewebsites.net/api/events/put"
+        type: "POST"
+        contentType: "application/json"
+        data:JSON.stringify data
+        success: (result) ->
+          Chaplin.utils.redirectTo url: "/"
+        error: (jqXHR, textStatus, errorThrown) ->
+          consolo.log jqXHR
+          alert "Error"

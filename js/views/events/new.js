@@ -3,7 +3,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/view', 'text!templates/events/new.hbs', 'geo', 'moment', 'DTpicker'], function(View, template, Geo, moment) {
+define(['chaplin', 'views/base/view', 'text!templates/events/new.hbs', 'geo', 'moment', 'DTpicker'], function(Chaplin, View, template, Geo, moment) {
   'use strict';
   var newEvent;
   return newEvent = (function(_super) {
@@ -12,6 +12,8 @@ define(['views/base/view', 'text!templates/events/new.hbs', 'geo', 'moment', 'DT
     __extends(newEvent, _super);
 
     function newEvent() {
+      this.submit = __bind(this.submit, this);
+      this.validate = __bind(this.validate, this);
       this.setCenter = __bind(this.setCenter, this);
       this.createMap = __bind(this.createMap, this);
       this.initDatePicker = __bind(this.initDatePicker, this);
@@ -31,7 +33,9 @@ define(['views/base/view', 'text!templates/events/new.hbs', 'geo', 'moment', 'DT
 
     newEvent.prototype.initialize = function() {
       newEvent.__super__.initialize.apply(this, arguments);
-      return this.geo = Geo.get();
+      this.geo = Geo.get();
+      this.delegate('submit', 'form', this.submit);
+      return this.delegate('input change', 'input', this.validate);
     };
 
     newEvent.prototype.attach = function() {
@@ -53,31 +57,30 @@ define(['views/base/view', 'text!templates/events/new.hbs', 'geo', 'moment', 'DT
     };
 
     newEvent.prototype.initDatePicker = function() {
-      var endDTP, startDTP;
-      startDTP = this.$el.find("#startDTPicker");
-      endDTP = this.$el.find("#endDTPicker");
-      startDTP.datetimepicker({
+      this.startDTP = this.$el.find("#startDTPicker");
+      this.endDTP = this.$el.find("#endDTPicker");
+      this.startDTP.datetimepicker({
         defaultDate: moment(),
         endDate: moment().add("hours", 2),
         useSeconds: false
       });
-      endDTP.datetimepicker({
+      this.endDTP.datetimepicker({
         defaultDate: moment().add("hours", 2),
         startDate: moment(),
         useSeconds: false
       });
-      startDTP.on('change.dp', (function(_this) {
+      this.startDTP.on('change.dp', (function(_this) {
         return function(e) {
           var val;
           val = $(e.target).data("DateTimePicker").getDate();
-          return endDTP.data("DateTimePicker").setStartDate(val);
+          return _this.endDTP.data("DateTimePicker").setStartDate(val);
         };
       })(this));
-      return endDTP.on('change.dp', (function(_this) {
+      return this.endDTP.on('change.dp', (function(_this) {
         return function(e) {
           var val;
           val = $(e.target).data("DateTimePicker").getDate();
-          return startDTP.data("DateTimePicker").setEndDate(val);
+          return _this.startDTP.data("DateTimePicker").setEndDate(val);
         };
       })(this));
     };
@@ -119,6 +122,53 @@ define(['views/base/view', 'text!templates/events/new.hbs', 'geo', 'moment', 'DT
       this.marker.setPosition(LatLng);
       this.$el.find(".inputLat").val(LatLng.lat());
       return this.$el.find(".inputLng").val(LatLng.lng());
+    };
+
+    newEvent.prototype.validate = function() {
+      var canSave, end, start;
+      canSave = true;
+      if ($("#eventTitle").val().length === 0) {
+        canSave = false;
+      }
+      start = moment(this.startDTP.data("DateTimePicker").getDate());
+      end = moment(this.endDTP.data("DateTimePicker").getDate());
+      if (start >= end) {
+        canSave = false;
+      }
+      return this.$el.find(".btn-submit").toggleClass("disabled", !canSave);
+    };
+
+    newEvent.prototype.submit = function(e) {
+      var data, fd;
+      e.preventDefault();
+      fd = $(e.target).serializeObject();
+      data = {
+        title: fd.title,
+        description: fd.description,
+        location: {
+          lat: fd.lat,
+          lng: fd.lng
+        },
+        user_id: 3,
+        int_id: parseInt(fd.tag),
+        start_date: moment(this.startDTP.data("DateTimePicker").getDate()).utc().format("YYYY/MM/DDTHH:mm:ss"),
+        end_date: moment(this.endDTP.data("DateTimePicker").getDate()).utc().format("YYYY/MM/DDTHH:mm:ss")
+      };
+      return $.ajax({
+        url: "http://wtgser.azurewebsites.net/api/events/put",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function(result) {
+          return Chaplin.utils.redirectTo({
+            url: "/"
+          });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          consolo.log(jqXHR);
+          return alert("Error");
+        }
+      });
     };
 
     return newEvent;

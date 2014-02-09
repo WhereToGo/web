@@ -3,7 +3,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['chaplin', 'handlebars', 'views/base/view', 'text!templates/main/index.hbs', 'text!templates/main/popover.hbs', 'geo'], function(Chaplin, Handlebars, View, template, popoverTemplate, Geo) {
+define(['chaplin', 'handlebars', 'views/base/view', 'text!templates/main/index.hbs', 'text!templates/main/popover.hbs', 'geo', 'models/tags-collection'], function(Chaplin, Handlebars, View, template, popoverTemplate, Geo, TagsCollection) {
   'use strict';
   var IndexView, that;
   that = null;
@@ -29,13 +29,24 @@ define(['chaplin', 'handlebars', 'views/base/view', 'text!templates/main/index.h
     IndexView.prototype.initialize = function() {
       IndexView.__super__.initialize.apply(this, arguments);
       this.geo = Geo.get();
+      this.tags = new TagsCollection();
       that = this;
-      return this.collection.fetch({
-        success: (function(_this) {
-          return function() {
-            return console.log(_this);
-          };
-        })(this)
+      window.collection = this.tags;
+      return this.tags.fetch({
+        success: function() {
+          return that.collection.fetch({
+            success: function(collection) {
+              var model, _i, _len, _ref, _results;
+              _ref = collection.models;
+              _results = [];
+              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                model = _ref[_i];
+                _results.push(that.addMarker(model.attributes));
+              }
+              return _results;
+            }
+          });
+        }
       });
     };
 
@@ -75,44 +86,7 @@ define(['chaplin', 'handlebars', 'views/base/view', 'text!templates/main/index.h
         map: this.map,
         title: "You are here!"
       });
-      this.markers = [];
-      return setTimeout((function(_this) {
-        return function() {
-          return _this.addMarker({
-            id: 0,
-            title: "ololo1",
-            description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta, voluptatem facilis ipsa consequuntur itaque quisquam animi cupiditate voluptates deserunt porro cumque quis nesciunt. Impedit, possimus, nisi omnis consectetur nesciunt sed. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste, reiciendis, laudantium delectus quidem quos corrupti perspiciatis consequatur magni tempore accusantium consequuntur alias aut provident eius sit ratione excepturi officiis quasi. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, ratione, odio, fugiat quaerat velit nulla numquam neque repellat deleniti animi inventore maxime quia aut! Repudiandae dolores sequi reprehenderit perferendis eveniet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, quae, suscipit et expedita earum sequi alias deleniti at corporis corrupti iusto unde fugiat culpa natus doloribus ut quos sit voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque incidunt possimus nemo. Non, perferendis, incidunt, ipsam, atque dolorem illum laudantium quam aliquam eius esse ex molestias alias magnam modi voluptas? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, suscipit, optio ipsum est quam modi facere quaerat laudantium consequuntur consequatur quo odio totam expedita recusandae natus. Deserunt, velit quasi culpa. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, excepturi, accusantium, fugiat qui laboriosam velit quibusdam reiciendis asperiores fugit sint necessitatibus nulla ipsam ipsa est facere animi ducimus voluptas consequatur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, provident, mollitia, officiis, aliquam at laboriosam in officia quo earum reprehenderit quam iste qui id temporibus odit culpa labore vitae placeat.",
-            users: [
-              {
-                id: 0,
-                name: "Vyatcheslav Potravnyy"
-              }, {
-                id: 1,
-                name: "Joe Lajoe"
-              }, {
-                id: 2,
-                name: "Lara Kroft"
-              }, {
-                id: 3,
-                name: "Sara Kerrigan"
-              }, {
-                id: 0,
-                name: "Vyatcheslav Potravnyy"
-              }, {
-                id: 1,
-                name: "Joe Lajoe"
-              }, {
-                id: 2,
-                name: "Lara Kroft"
-              }, {
-                id: 3,
-                name: "Sara Kerrigan"
-              }
-            ],
-            path: "strike"
-          }, new google.maps.LatLng(46.46568, 30.756255));
-        };
-      })(this), 3000);
+      return this.markers = [];
     };
 
     IndexView.prototype.setCenter = function(LatLng) {
@@ -120,15 +94,20 @@ define(['chaplin', 'handlebars', 'views/base/view', 'text!templates/main/index.h
       return this.me.setPosition(LatLng);
     };
 
-    IndexView.prototype.addMarker = function(model, LatLng) {
-      var marker, markerImage;
-      markerImage = new google.maps.MarkerImage('/i/tags/' + model.path + '.png', new google.maps.Size(60, 60), new google.maps.Point(0, 0), new google.maps.Point(30, 30), new google.maps.Size(60, 60));
+    IndexView.prototype.addMarker = function(attrs) {
+      var LatLng, marker, markerImage, tagId;
+      LatLng = new google.maps.LatLng(attrs.location.lat, attrs.location.lng);
+      tagId = attrs.int_id;
+      if (tagId < 3) {
+        tagId = 3;
+      }
+      markerImage = new google.maps.MarkerImage('/i/tags/' + this.tags.get(tagId).attributes.path + '.png', new google.maps.Size(60, 60), new google.maps.Point(0, 0), new google.maps.Point(30, 30), new google.maps.Size(60, 60));
       marker = new google.maps.Marker({
         icon: markerImage,
         position: LatLng,
         map: this.map,
-        title: model.title,
-        model: model
+        title: attrs.title,
+        model: attrs
       });
       google.maps.event.addListener(marker, 'click', this.openPopover);
       return this.markers.push(marker);

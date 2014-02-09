@@ -90,7 +90,8 @@ body {
 
 
   .outer-page-container {
-    max-width: 1000px;
+    width: 80%;
+    min-width: 850px;
     height:100%;
     margin: 0 auto;
     background: #fff;
@@ -108,6 +109,15 @@ body {
     overflow: auto;
     position: relative;
   }
+
+  @media screen and (max-width: 850px) {
+    .outer-page-container {
+      width:100%;
+      min-width: auto;
+    }
+  }
+
+
 #mapView{
   position: absolute;
   top:0;
@@ -127,21 +137,22 @@ body {
 
 #addEvent{
   display: block;
-  width: 142px;
-  height:61px;
-  padding: 0 10px;
+  width: 152px;
+  height:137px;
+  padding: 10px;
   position:absolute;
   bottom:0px;
   left:50%;
-  margin-left: -61px;
+  margin-left: -66px;
   z-index:9999px;
   overflow: hidden;
+  opacity: 0.7;
 
-  -webkit-transition: bottom 0.5s, height 0.5s;;
-  -moz-transition: bottom 0.5s, height 0.5s;;
-  -ms-transition: bottom 0.5s, height 0.5s;;
-  -o-transition: bottom 0.5s, height 0.5s;;
-  transition: bottom 0.5s, height 0.5s;;
+  -webkit-transition: bottom 0.5s, height 0.5s, opacity 0.5s;
+  -moz-transition: bottom 0.5s, height 0.5s, opacity 0.5s;
+  -ms-transition: bottom 0.5s, height 0.5s, opacity 0.5s;
+  -o-transition: bottom 0.5s, height 0.5s, opacity 0.5s;
+  transition: bottom 0.5s, height 0.5s, opacity 0.5s;
 }
 #addEvent a {
   display: block;
@@ -151,12 +162,14 @@ body {
   background-size: 128px 128px;
   border-radius: 100%;
 
-  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,0.7);
-  -moz-box-shadow: 0 5px 10px rgba(0,0,0,0.7);
-  box-shadow: 0 5px 10px rgba(0,0,0,0.7);
+  -webkit-box-shadow: 0 5px 20px rgba(0,0,0,1);
+  -moz-box-shadow: 0 5px 20px rgba(0,0,0,1);
+  box-shadow: 0 5px 20px rgba(0,0,0,1);
 }
 #addEvent:hover, #addEvent:focus {
-  height: 142px;
+  bottom:20px;
+  height:157px;
+  opacity:1;
 }
 
 
