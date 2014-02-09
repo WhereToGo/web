@@ -121,7 +121,7 @@ define [
 
 
       $.ajax
-        url: "http://wtgser.azurewebsites.net/api/events/put"
+        url: "/api/events/put"
         type: "POST"
         contentType: "application/json"
         data:JSON.stringify data

@@ -24,7 +24,7 @@ define(['chaplin', 'models/base/collection', 'models/base/model'], function(Chap
       return TagsCollection.__super__.constructor.apply(this, arguments);
     }
 
-    TagsCollection.prototype.url = "http://wtgser.azurewebsites.net/api/tags/getall";
+    TagsCollection.prototype.url = "/api/tags/getall";
 
     TagsCollection.prototype.model = TagsModel;
 

@@ -113,7 +113,7 @@ define [
       #       user_id: that.auth.id
 
       #     $.ajax
-      #       url: "http://wtgser.azurewebsites.net/api/events/subscription"
+      #       url: "/api/events/subscription"
       #       type: "POST"
       #       contentType: "application/json"
       #       data:JSON.stringify data

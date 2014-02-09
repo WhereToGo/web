@@ -14,7 +14,7 @@ define(['models/base/collection', 'models/events-model'], function(Collection, E
 
     EventsCollection.prototype.model = EventsModel;
 
-    EventsCollection.prototype.url = "http://wtgser.azurewebsites.net/api/events/getall";
+    EventsCollection.prototype.url = "/api/events/getall";
 
     return EventsCollection;
 

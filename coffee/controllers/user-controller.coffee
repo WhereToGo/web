@@ -28,7 +28,7 @@ define [
     edit: (params) =>
 
       # $.ajax
-      #   url: "http://wtgser.azurewebsites.net/api/users/getuser?user_id=1"
+      #   url: "/api/users/getuser?user_id=1"
       #   cache: false
       #   beforeSend: ->
       #     #alert "Получаем контент"
@@ -42,11 +42,11 @@ define [
 
       @model = new Model()
       @model.fetch
-        url:'http://wtgser.azurewebsites.net/api/users/get?id=1'
+        url:'/api/users/get?id=1'
         success:()=>
           @view = new Edit model: @model , region: 'main'
       # $.ajax
-      #   url: "http://wtgser.azurewebsites.net/api/users/postme"
+      #   url: "/api/users/postme"
       #   type: "POST"
       #   contentType: "application/json"
       #   data:'{"login":"logiwnd","pass":"slkdfj"}'
@@ -59,7 +59,7 @@ define [
       #     return\
      
       # $.ajax
-      #   url: "http://wtgser.azurewebsites.net/api/tags/subscription"
+      #   url: "/api/tags/subscription"
       #   type: "POST"
       #   contentType: "application/json"
       #   data:'{"int_id":"5","user_id":"1"}'

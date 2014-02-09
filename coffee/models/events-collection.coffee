@@ -6,5 +6,5 @@ define [
 
   class EventsCollection extends Collection
     model: EventsModel
-    url: "http://wtgser.azurewebsites.net/api/events/getall"
+    url: "/api/events/getall"
 	

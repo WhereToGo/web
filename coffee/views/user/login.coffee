@@ -22,7 +22,7 @@ define [
       formData = $(e.target).serializeObject()
 
       $.ajax
-        url: "http://wtgser.azurewebsites.net/api/users/postme"
+        url: "/api/users/postme"
         type: "POST"
         contentType: "application/json"
         data:JSON.stringify formData

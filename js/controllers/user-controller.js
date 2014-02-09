@@ -46,7 +46,7 @@ define(['controllers/base/controller', 'auth', 'models/base/model', 'models/user
     UserController.prototype.edit = function(params) {
       this.model = new Model();
       return this.model.fetch({
-        url: 'http://wtgser.azurewebsites.net/api/users/get?id=1',
+        url: '/api/users/get?id=1',
         success: (function(_this) {
           return function() {
             return _this.view = new Edit({

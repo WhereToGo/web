@@ -160,7 +160,7 @@ define(['chaplin', 'views/base/view', 'text!templates/events/new.hbs', 'geo', 'a
         end_date: moment(this.endDTP.data("DateTimePicker").getDate()).utc().format("YYYY/MM/DDTHH:mm:ss")
       };
       return $.ajax({
-        url: "http://wtgser.azurewebsites.net/api/events/put",
+        url: "/api/events/put",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(data),

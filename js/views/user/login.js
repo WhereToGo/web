@@ -37,7 +37,7 @@ define(['views/base/view', 'text!templates/user/login.hbs'], function(View, temp
       e.preventDefault();
       formData = $(e.target).serializeObject();
       return $.ajax({
-        url: "http://wtgser.azurewebsites.net/api/users/postme",
+        url: "/api/users/postme",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(formData),

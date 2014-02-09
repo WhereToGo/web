@@ -10,5 +10,5 @@ define [
   
 
   class TagsCollection extends Collection
-    url: "http://wtgser.azurewebsites.net/api/tags/getall"
+    url: "/api/tags/getall"
     model: TagsModel
