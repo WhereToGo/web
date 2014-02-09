@@ -44,17 +44,12 @@ define(['controllers/base/controller', 'auth', 'models/base/model', 'models/user
     };
 
     UserController.prototype.edit = function(params) {
-      return $.ajax({
-        url: "http://wtgser.azurewebsites.net/api/users/getuser?user_id=1",
-        cache: false,
-        beforeSend: function() {},
+      this.model = new Model();
+      return this.model.fetch({
+        url: 'http://wtgser.azurewebsites.net/api/users/get?id=1',
         success: (function(_this) {
-          return function(html) {
-            var username;
-            _this.model = new Model();
-            username = JSON.parse(html).name;
-            _this.model.set("username", username);
-            _this.view = new Edit({
+          return function() {
+            return _this.view = new Edit({
               model: _this.model,
               region: 'main'
             });

@@ -5,7 +5,6 @@
   <title>WTG</title>
     <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
-    <link rel="stylesheet" type="text/css" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"/>
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
     
     <script src="bower_components/requirejs/require.js"></script>
@@ -19,13 +18,11 @@
       jquery: '../bower_components/jquery/jquery',
       underscore: '../bower_components/lodash/dist/lodash',
       backbone: '../bower_components/backbone/backbone',
-      moment: '../bower_components/moment/min/moment.min',
       handlebars: '../bower_components/handlebars/handlebars',
       text: '../bower_components/requirejs-text/text',
       async: '../bower_components/requirejs-plugins/src/async',
       chaplin: '../bower_components/chaplin/chaplin',
       bootstrap: '../bower_components/bootstrap/dist/js/bootstrap.min',
-      DTpicker: '../bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min',
       serializeObject: 'lib/serializeObject.jquery'
     },
     // Underscore and Backbone are not AMD-capable per default,
@@ -40,9 +37,6 @@
       },
       bootstrap: {
         deps: ['jquery']
-      },
-      DTpicker: {
-        deps: ['bootstrap', 'jquery', 'moment']
       },
       serializeObject: {
         deps: ['jquery']

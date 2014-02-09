@@ -13,4 +13,4 @@ define [
 
     initialize:(model)=>
     	super
-    	console.log(model.username)
+    	console.log(model)
