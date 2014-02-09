@@ -24,7 +24,7 @@ define [
       @tags = new TagsCollection()
       that = @
 
-      window.collection = @tags
+      window.collection = @collection
 
       @tags.fetch
         success: ()->

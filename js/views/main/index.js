@@ -31,7 +31,7 @@ define(['chaplin', 'handlebars', 'views/base/view', 'text!templates/main/index.h
       this.geo = Geo.get();
       this.tags = new TagsCollection();
       that = this;
-      window.collection = this.tags;
+      window.collection = this.collection;
       return this.tags.fetch({
         success: function() {
           return that.collection.fetch({
