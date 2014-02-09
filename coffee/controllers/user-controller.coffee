@@ -25,9 +25,22 @@ define [
       @auth.logout()
       @redirectTo url: "login"
 
-    edit: (params) ->
-      @model = new Model
-      @model.fetch
-        url:'http://wtgser.azurewebsites.net/api/users/getuser?user_id=1'
-        success:()=>
-          @view = new Edit model: @model , region: 'main'
+    edit: (params) =>
+      $.ajax
+        url: "http://wtgser.azurewebsites.net/api/users/getuser?user_id=1"
+        cache: false
+        beforeSend: ->
+          #alert "Получаем контент"
+          return
+        success: (html) =>
+          @model = new Model()
+          username = JSON.parse(html).name
+          @model.set("username",username)
+          @view = new Edit model: @model, region: 'main'
+          return
+
+#      @model = new Model()
+#      @model.fetch
+#        url:'http://wtgser.azurewebsites.net/api/users/getuser?user_id=1'
+#       success:()=>
+#          @view = new Edit model: @model , region: 'main'
