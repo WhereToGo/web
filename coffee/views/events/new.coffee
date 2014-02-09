@@ -73,23 +73,17 @@ define [
 
       @map = new google.maps.Map @$el.find("#newEventMap")[0], mapOptions 
 
-      @marker = new google.maps.Marker
+      @me = new google.maps.Marker
         position: startCoords,
         map: @map,
-        title: "Place for event"
-        draggable: true
-
-      google.maps.event.addListener @marker, 'dragend', ()=>
-        LatLng = @marker.getPosition()
-        @$el.find(".inputLat").val LatLng.lat()
-        @$el.find(".inputLng").val LatLng.lng()
+        title: "You are here!"
 
     setCenter: (LatLng) =>
       @map.setCenter LatLng
-      @marker.setPosition LatLng
+      @me.setPosition LatLng
 
-      @$el.find(".inputLat").val LatLng.lat()
-      @$el.find(".inputLng").val LatLng.lng()
+    addMarker: (LatLng)=>
+
 
 
     validate: ()=>

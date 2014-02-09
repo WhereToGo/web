@@ -6,6 +6,9 @@ define [
 
   class EventsCollection extends Collection
     model: EventsModel
-    url: "http://wtgser.azurewebsites.net/api/events/getall"
+    url: "http://wtgser.azurewebsites.net/api/events/getevents"
 
+    parse:(response)=>
+      console.log a
+      super
 	

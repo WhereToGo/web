@@ -25,7 +25,7 @@ define(['views/base/view', 'text!templates/user/edit.hbs'], (function(_this) {
 
       SiteView.prototype.initialize = function(model) {
         SiteView.__super__.initialize.apply(this, arguments);
-        return console.log(model.username);
+        return console.log(model);
       };
 
       return SiteView;

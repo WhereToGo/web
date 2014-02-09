@@ -14,6 +14,7 @@ define(['chaplin', 'views/base/view', 'text!templates/events/new.hbs', 'geo', 'm
     function newEvent() {
       this.submit = __bind(this.submit, this);
       this.validate = __bind(this.validate, this);
+      this.addMarker = __bind(this.addMarker, this);
       this.setCenter = __bind(this.setCenter, this);
       this.createMap = __bind(this.createMap, this);
       this.initDatePicker = __bind(this.initDatePicker, this);
@@ -101,28 +102,19 @@ define(['chaplin', 'views/base/view', 'text!templates/events/new.hbs', 'geo', 'm
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       this.map = new google.maps.Map(this.$el.find("#newEventMap")[0], mapOptions);
-      this.marker = new google.maps.Marker({
+      return this.me = new google.maps.Marker({
         position: startCoords,
         map: this.map,
-        title: "Place for event",
-        draggable: true
+        title: "You are here!"
       });
-      return google.maps.event.addListener(this.marker, 'dragend', (function(_this) {
-        return function() {
-          var LatLng;
-          LatLng = _this.marker.getPosition();
-          _this.$el.find(".inputLat").val(LatLng.lat());
-          return _this.$el.find(".inputLng").val(LatLng.lng());
-        };
-      })(this));
     };
 
     newEvent.prototype.setCenter = function(LatLng) {
       this.map.setCenter(LatLng);
-      this.marker.setPosition(LatLng);
-      this.$el.find(".inputLat").val(LatLng.lat());
-      return this.$el.find(".inputLng").val(LatLng.lng());
+      return this.me.setPosition(LatLng);
     };
+
+    newEvent.prototype.addMarker = function(LatLng) {};
 
     newEvent.prototype.validate = function() {
       var canSave, end, start;

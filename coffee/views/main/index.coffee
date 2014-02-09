@@ -31,8 +31,6 @@ define [
           that.collection.fetch
             success: (collection)->
               that.addMarker model.attributes for model in collection.models
-
-      
     
     attach: ()->
       super
