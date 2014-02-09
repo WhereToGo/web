@@ -5,8 +5,9 @@ define [
   'text!templates/main/index.hbs'
   'text!templates/main/popover.hbs'
   'geo'
+  'auth'
   'models/tags-collection'
-], (Chaplin, Handlebars, View, template, popoverTemplate, Geo, TagsCollection) ->
+], (Chaplin, Handlebars, View, template, popoverTemplate, Geo, Auth, TagsCollection) ->
   'use strict'
 
   that = null
@@ -21,6 +22,7 @@ define [
     initialize: =>
       super
       @geo = Geo.get()
+      @auth = Auth.get()
       @tags = new TagsCollection()
       that = @
 
@@ -94,6 +96,29 @@ define [
 
       infoWindow = new google.maps.InfoWindow
         content: content,
-        position: @getPosition()
+        position: @getPosition(),
+        maxWidth: 450
 
       infoWindow.open(that.map)
+
+      # Because of API is inactive - we disable join feature
+      # google.maps.event.addListener infoWindow,'domready',()=>
+        
+        
+      #   $(".eventPopover .btn-subscribe").on 'click', (e)=>
+      #     $target = $(e.target).closest ".btn"
+
+      #     data = 
+      #       eve_id: @model.eve_id,
+      #       user_id: that.auth.id
+
+      #     $.ajax
+      #       url: "http://wtgser.azurewebsites.net/api/events/subscription"
+      #       type: "POST"
+      #       contentType: "application/json"
+      #       data:JSON.stringify data
+      #       error: () =>
+      #         alert ("error")
+      #       success: () =>
+      #         $target.removeClass("btn-primary").addClass("joined").text("Joined").blur()
+

@@ -3,7 +3,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['chaplin', 'handlebars', 'views/base/view', 'text!templates/main/index.hbs', 'text!templates/main/popover.hbs', 'geo', 'models/tags-collection'], function(Chaplin, Handlebars, View, template, popoverTemplate, Geo, TagsCollection) {
+define(['chaplin', 'handlebars', 'views/base/view', 'text!templates/main/index.hbs', 'text!templates/main/popover.hbs', 'geo', 'auth', 'models/tags-collection'], function(Chaplin, Handlebars, View, template, popoverTemplate, Geo, Auth, TagsCollection) {
   'use strict';
   var IndexView, that;
   that = null;
@@ -29,6 +29,7 @@ define(['chaplin', 'handlebars', 'views/base/view', 'text!templates/main/index.h
     IndexView.prototype.initialize = function() {
       IndexView.__super__.initialize.apply(this, arguments);
       this.geo = Geo.get();
+      this.auth = Auth.get();
       this.tags = new TagsCollection();
       that = this;
       window.collection = this.collection;
@@ -119,7 +120,8 @@ define(['chaplin', 'handlebars', 'views/base/view', 'text!templates/main/index.h
       content = tpl(this.model);
       infoWindow = new google.maps.InfoWindow({
         content: content,
-        position: this.getPosition()
+        position: this.getPosition(),
+        maxWidth: 450
       });
       return infoWindow.open(that.map);
     };
