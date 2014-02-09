@@ -3,7 +3,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['chaplin', 'views/base/view', 'text!templates/events/new.hbs', 'geo', 'moment', 'DTpicker'], function(Chaplin, View, template, Geo, moment) {
+define(['chaplin', 'views/base/view', 'text!templates/events/new.hbs', 'geo', 'moment', 'DTPicker'], function(Chaplin, View, template, Geo, moment) {
   'use strict';
   var newEvent;
   return newEvent = (function(_super) {
@@ -102,19 +102,31 @@ define(['chaplin', 'views/base/view', 'text!templates/events/new.hbs', 'geo', 'm
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       this.map = new google.maps.Map(this.$el.find("#newEventMap")[0], mapOptions);
-      return this.me = new google.maps.Marker({
+      this.marker = new google.maps.Marker({
         position: startCoords,
         map: this.map,
-        title: "You are here!"
+        title: "Place for event",
+        draggable: true
       });
+      return google.maps.event.addListener(this.marker, 'dragend', (function(_this) {
+        return function() {
+          var LatLng;
+          LatLng = _this.marker.getPosition();
+          _this.$el.find(".inputLat").val(LatLng.lat());
+          return _this.$el.find(".inputLng").val(LatLng.lng());
+        };
+      })(this));
     };
 
     newEvent.prototype.setCenter = function(LatLng) {
       this.map.setCenter(LatLng);
-      return this.me.setPosition(LatLng);
+      return this.marker.setPosition(LatLng);
     };
 
-    newEvent.prototype.addMarker = function(LatLng) {};
+    newEvent.prototype.addMarker = function(LatLng) {
+      this.$el.find(".inputLat").val(LatLng.lat());
+      return this.$el.find(".inputLng").val(LatLng.lng());
+    };
 
     newEvent.prototype.validate = function() {
       var canSave, end, start;

@@ -4,7 +4,7 @@ define [
   'text!templates/events/new.hbs'
   'geo'
   'moment'
-  'DTpicker'
+  'DTPicker'
 ], (Chaplin, View, template, Geo, moment) ->
   'use strict'
 
@@ -73,17 +73,24 @@ define [
 
       @map = new google.maps.Map @$el.find("#newEventMap")[0], mapOptions 
 
-      @me = new google.maps.Marker
+      @marker = new google.maps.Marker
         position: startCoords,
         map: @map,
-        title: "You are here!"
+        title: "Place for event"
+        draggable: true
+
+      google.maps.event.addListener @marker, 'dragend', ()=>
+        LatLng = @marker.getPosition()
+        @$el.find(".inputLat").val LatLng.lat()
+        @$el.find(".inputLng").val LatLng.lng()
 
     setCenter: (LatLng) =>
       @map.setCenter LatLng
-      @me.setPosition LatLng
+      @marker.setPosition LatLng
 
     addMarker: (LatLng)=>
-
+      @$el.find(".inputLat").val LatLng.lat()
+      @$el.find(".inputLng").val LatLng.lng()
 
 
     validate: ()=>
