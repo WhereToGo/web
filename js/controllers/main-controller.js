@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['controllers/base/controller', 'views/main/index'], function(Controller, IndexView) {
+define(['controllers/base/controller', 'models/events-collection', 'views/main/index'], function(Controller, EventsCollection, IndexView) {
   'use strict';
   var MainController;
   return MainController = (function(_super) {
@@ -13,7 +13,9 @@ define(['controllers/base/controller', 'views/main/index'], function(Controller,
     }
 
     MainController.prototype.index = function(params) {
+      this.collection = new EventsCollection();
       return this.view = new IndexView({
+        collection: this.collection,
         region: 'main'
       });
     };

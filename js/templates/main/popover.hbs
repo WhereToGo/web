@@ -1,0 +1,18 @@
+<div class="eventPopover">
+	<h1 class="title">{{title}}</h1>
+	<p class="description">{{description}}</p>
+	<div class="subscribed">
+		<p>Visitors: </p>
+		<ul>
+			{{#each users}}
+				<li>
+					<span class="glyphicon glyphicon-user"></span>
+					{{name}}
+				</li>
+			{{/each}}
+		</ul>
+	</div>
+	<button class="btn btn-default btn-primary btn-lg btn-subscribe">
+		Visit
+	</button>
+</div>
