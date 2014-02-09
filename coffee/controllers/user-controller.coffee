@@ -10,7 +10,7 @@ define [
 
   class UserController extends Controller
 
-    initialize: ()->
+    initialize: ()=>
       super
       @auth = Auth.get()
 
@@ -40,9 +40,11 @@ define [
       #     @view = new Edit model: @model, region: 'main'
       #     return
 
+      that = @
+        
       @model = new Model()
       @model.fetch
-        url:'http://wtgser.azurewebsites.net/api/users/get?id=1'
+        url:'http://wtgser.azurewebsites.net/api/users/get?id='+that.auth.id
         success:()=>
           @view = new Edit model: @model , region: 'main'
       # $.ajax
