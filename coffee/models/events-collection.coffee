@@ -8,7 +8,4 @@ define [
     model: EventsModel
     url: "http://wtgser.azurewebsites.net/api/events/getall"
 
-    parse:(response)=>
-      console.log a
-      super
 	

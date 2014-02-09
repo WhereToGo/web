@@ -33,14 +33,7 @@ define(['chaplin', 'handlebars', 'views/base/view', 'text!templates/main/index.h
       return this.collection.fetch({
         success: (function(_this) {
           return function() {
-            return alert("success");
-          };
-        })(this),
-        error: (function(_this) {
-          return function(a, b, c) {
-            console.log(a);
-            console.log(b);
-            return console.log(c);
+            return console.log(_this);
           };
         })(this)
       });

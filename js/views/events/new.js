@@ -3,7 +3,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/view', 'text!templates/events/new.hbs', 'geo'], function(View, template, Geo) {
+define(['views/base/view', 'text!templates/events/new.hbs', 'geo', 'moment', 'DTpicker'], function(View, template, Geo, moment) {
   'use strict';
   var newEvent;
   return newEvent = (function(_super) {
@@ -12,9 +12,9 @@ define(['views/base/view', 'text!templates/events/new.hbs', 'geo'], function(Vie
     __extends(newEvent, _super);
 
     function newEvent() {
-      this.addMarker = __bind(this.addMarker, this);
       this.setCenter = __bind(this.setCenter, this);
       this.createMap = __bind(this.createMap, this);
+      this.initDatePicker = __bind(this.initDatePicker, this);
       this.initialize = __bind(this.initialize, this);
       return newEvent.__super__.constructor.apply(this, arguments);
     }
@@ -40,11 +40,44 @@ define(['views/base/view', 'text!templates/events/new.hbs', 'geo'], function(Vie
         'display': 'none'
       });
       this.createMap(new google.maps.LatLng(this.geo.firstCoords.lat, this.geo.firstCoords.lng));
-      return this.geo.getCoords((function(_this) {
+      this.geo.getCoords((function(_this) {
         return function(position) {
           var latlng;
           latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
           return _this.map.setCenter(latlng);
+        };
+      })(this));
+      this.$el.find(".inputLat").val(this.geo.firstCoords.lat);
+      this.$el.find(".inputLng").val(this.geo.firstCoords.lng);
+      return this.initDatePicker();
+    };
+
+    newEvent.prototype.initDatePicker = function() {
+      var endDTP, startDTP;
+      startDTP = this.$el.find("#startDTPicker");
+      endDTP = this.$el.find("#endDTPicker");
+      startDTP.datetimepicker({
+        defaultDate: moment(),
+        endDate: moment().add("hours", 2),
+        useSeconds: false
+      });
+      endDTP.datetimepicker({
+        defaultDate: moment().add("hours", 2),
+        startDate: moment(),
+        useSeconds: false
+      });
+      startDTP.on('change.dp', (function(_this) {
+        return function(e) {
+          var val;
+          val = $(e.target).data("DateTimePicker").getDate();
+          return endDTP.data("DateTimePicker").setStartDate(val);
+        };
+      })(this));
+      return endDTP.on('change.dp', (function(_this) {
+        return function(e) {
+          var val;
+          val = $(e.target).data("DateTimePicker").getDate();
+          return startDTP.data("DateTimePicker").setEndDate(val);
         };
       })(this));
     };
@@ -65,19 +98,28 @@ define(['views/base/view', 'text!templates/events/new.hbs', 'geo'], function(Vie
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       this.map = new google.maps.Map(this.$el.find("#newEventMap")[0], mapOptions);
-      return this.me = new google.maps.Marker({
+      this.marker = new google.maps.Marker({
         position: startCoords,
         map: this.map,
-        title: "You are here!"
+        title: "Place for event",
+        draggable: true
       });
+      return google.maps.event.addListener(this.marker, 'dragend', (function(_this) {
+        return function() {
+          var LatLng;
+          LatLng = _this.marker.getPosition();
+          _this.$el.find(".inputLat").val(LatLng.lat());
+          return _this.$el.find(".inputLng").val(LatLng.lng());
+        };
+      })(this));
     };
 
     newEvent.prototype.setCenter = function(LatLng) {
       this.map.setCenter(LatLng);
-      return this.me.setPosition(LatLng);
+      this.marker.setPosition(LatLng);
+      this.$el.find(".inputLat").val(LatLng.lat());
+      return this.$el.find(".inputLng").val(LatLng.lng());
     };
-
-    newEvent.prototype.addMarker = function(LatLng) {};
 
     return newEvent;
 
