@@ -91,6 +91,8 @@ define [
       @markers.push marker
 
     openPopover: ()->
+      that.activePopover?.close()
+
       tpl = Handlebars.compile popoverTemplate
       content = tpl @model
 
@@ -100,6 +102,8 @@ define [
         maxWidth: 450
 
       infoWindow.open(that.map)
+
+      that.activePopover = infoWindow
 
       # Because of API is inactive - we disable join feature
       # google.maps.event.addListener infoWindow,'domready',()=>

@@ -115,7 +115,10 @@ define(['chaplin', 'handlebars', 'views/base/view', 'text!templates/main/index.h
     };
 
     IndexView.prototype.openPopover = function() {
-      var content, infoWindow, tpl;
+      var content, infoWindow, tpl, _ref;
+      if ((_ref = that.activePopover) != null) {
+        _ref.close();
+      }
       tpl = Handlebars.compile(popoverTemplate);
       content = tpl(this.model);
       infoWindow = new google.maps.InfoWindow({
@@ -123,7 +126,8 @@ define(['chaplin', 'handlebars', 'views/base/view', 'text!templates/main/index.h
         position: this.getPosition(),
         maxWidth: 450
       });
-      return infoWindow.open(that.map);
+      infoWindow.open(that.map);
+      return that.activePopover = infoWindow;
     };
 
     return IndexView;
