@@ -1,23 +1,43 @@
-<form role="form">
-    <div class="form-group">
-        <label>Event title</label>
-        <input class="form-control" type="text" placeholder="Event title..." value="" name="eventTitle">
-        <label>Description</label>
-        <textarea class="form-control" placeholder="Description..."></textarea>
-        <div class="checkbox">
-            <label><input type="checkbox"/>biketrial</label>
+<div id="newEventMap"></div>
+
+<form role="form" class="eventEditor">
+    <div class="eventEditorWrap">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="eventTitle">Event title</label>
+                <input type="text" name="title" class="form-control" id="eventTitle" placeholder="Title">
+            </div>
+            <div class="form-group">
+                <label for="eventDesc">Description</label>
+                <textarea class="form-control" name="description" id="eventDesc" rows="5" placeholder="Enter description for event here"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="eventType">Select category</label>
+                <select name="tag" id="eventType"  class="form-control">
+                    <option value="0">Bike</option>
+                    <option value="1">Chess</option>
+                    <option value="2">Football</option>
+                    <option value="3">Parkour</option>
+                    <option value="4">Running</option>
+                    <option value="5">Skateboarding</option>
+                    <option value="6">Strike</option>
+                    <option value="7">Swimming</option>
+                    <option value="8">Volunteer</option>
+                    <option value="9">Horse Riding</option>
+                    <option value="10">Skating</option>
+                </select>
+            </div>
         </div>
-        <div class="checkbox">
-            <label><input type="checkbox"/>skatebording</label>
+        <div class="col-md-4 col-md-offset-2">
+            <div class="form-group">
+                <label for="eventStartTime">Start time</label>
+                <input type="text" name="startTime" class="form-control" id="eventStartTime">
+            </div>
+            <div class="form-group">
+                <label for="eventEndTime">End time</label>
+                <input type="text" name="endTime" class="form-control" id="eventEndTime">
+            </div>
         </div>
-        <div class="checkbox">
-            <label><input type="checkbox"/>freerunning</label>
-        </div>
-        <div class="checkbox">
-            <label><input type="checkbox"/>basketball</label>
-        </div>
-        
+        <button type="submit" class="btn btn-default btn-submit btn-primary btn-lg">Save</button>
     </div>
 </form>
-<div id="newEventMap"></div>
-<button type="submit" class="btn btn-default btn-primary">Submit</button>

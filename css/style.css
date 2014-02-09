@@ -116,14 +116,6 @@ body {
   bottom:0;
 }
 
-#newEventMap{
-  position: absolute;
-  top:0;
-  right:0;
-  height:50%;
-  width:50%;
-    
-}
 #EventMap{
   width:100%;
   position: absolute;
@@ -167,13 +159,6 @@ body {
   height: 142px;
 }
 
-#newEvent{
-    position:absolute;
-}
-.newEvent{
-    width:50%;
-    padding-right:10px;
-}
 
 .eventPopover {
   padding: 10px;
@@ -220,4 +205,38 @@ body {
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+}
+
+
+
+.newEvent #newEventMap{
+  position: absolute;
+  top:0px;
+  left:0px;
+  right:0px;
+  bottom:50%;
+}
+.newEvent .eventEditor {
+  position: absolute;
+  top:50%;
+  left:0px;
+  right:0px;
+  bottom:0;
+  padding: 20px 10px 10px 10px;
+  background: #fff;
+  overflow: auto;
+  -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.7);
+  -moz-box-shadow: 0 0 10px rgba(0,0,0,0.7);
+  box-shadow: 0 0 10px rgba(0,0,0,0.7);
+}
+.newEvent .eventEditorWrap {
+  position: relative;
+  overflow: hidden;
+  min-height: 100%;
+}
+
+.newEvent .btn-submit {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
