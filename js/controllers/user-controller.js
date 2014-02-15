@@ -11,6 +11,7 @@ define(['controllers/base/controller', 'auth', 'models/base/model', 'models/user
 
     function UserController() {
       this.edit = __bind(this.edit, this);
+      this.initialize = __bind(this.initialize, this);
       return UserController.__super__.constructor.apply(this, arguments);
     }
 
@@ -44,9 +45,11 @@ define(['controllers/base/controller', 'auth', 'models/base/model', 'models/user
     };
 
     UserController.prototype.edit = function(params) {
+      var that;
+      that = this;
       this.model = new Model();
       return this.model.fetch({
-        url: 'http://wtgser.azurewebsites.net/api/users/get?id=1',
+        url: 'http://wtgser.azurewebsites.net/api/users/get?id=' + that.auth.id,
         success: (function(_this) {
           return function() {
             return _this.view = new Edit({
