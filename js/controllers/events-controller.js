@@ -31,3 +31,5 @@ define(['controllers/base/controller', 'models/base/model', 'views/events/new', 
 
   })(Controller);
 });
+
+//# sourceMappingURL=events-controller.map

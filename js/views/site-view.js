@@ -29,3 +29,5 @@ define(['views/base/view', 'text!templates/site.hbs'], function(View, template) 
 
   })(View);
 });
+
+//# sourceMappingURL=site-view.map

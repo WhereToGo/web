@@ -24,3 +24,5 @@ define(['views/base/view', 'text!templates/hello-world.hbs'], function(View, tem
 
   })(View);
 });
+
+//# sourceMappingURL=hello-world-view.map

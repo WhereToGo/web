@@ -15,3 +15,5 @@ define(['chaplin'], function(Chaplin) {
 
   })(Chaplin.Model);
 });
+
+//# sourceMappingURL=model.map

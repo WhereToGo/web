@@ -18,3 +18,5 @@ define(['views/base/view', 'text!templates/header.hbs'], function(View, template
 
   })(View);
 });
+
+//# sourceMappingURL=header-view.map

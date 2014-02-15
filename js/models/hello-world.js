@@ -20,3 +20,5 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
 
   })(Model);
 });
+
+//# sourceMappingURL=hello-world.map

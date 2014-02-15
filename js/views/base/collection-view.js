@@ -18,3 +18,5 @@ define(['chaplin', 'views/base/view'], function(Chaplin, View) {
 
   })(Chaplin.CollectionView);
 });
+
+//# sourceMappingURL=collection-view.map

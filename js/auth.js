@@ -85,3 +85,5 @@ define(['singleton'], function(Singleton) {
 
   })(Singleton);
 });
+
+//# sourceMappingURL=auth.map

@@ -59,3 +59,5 @@ define(['views/base/view', 'text!templates/user/login.hbs'], function(View, temp
 
   })(View);
 });
+
+//# sourceMappingURL=login.map

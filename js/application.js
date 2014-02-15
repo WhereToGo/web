@@ -26,3 +26,5 @@ define(['chaplin', 'bootstrap', 'serializeObject'], function(Chaplin) {
 
   })(Chaplin.Application);
 });
+
+//# sourceMappingURL=application.map

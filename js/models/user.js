@@ -16,3 +16,5 @@ define(['models/base/model'], function(Model) {
 
   })(Model);
 });
+
+//# sourceMappingURL=user.map

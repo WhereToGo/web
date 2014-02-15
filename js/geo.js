@@ -10,24 +10,35 @@ define(['singleton', 'async!http://maps.google.com/maps/api/js?sensor=true&key=A
     __extends(Geo, _super);
 
     function Geo() {
+      this.off = __bind(this.off, this);
+      this.on = __bind(this.on, this);
       this.getCoordsError = __bind(this.getCoordsError, this);
-      this.getCoords = __bind(this.getCoords, this);
+      this.update = __bind(this.update, this);
+      this.setCoords = __bind(this.setCoords, this);
       return Geo.__super__.constructor.apply(this, arguments);
     }
 
-    Geo.prototype.firstCoords = {
+    Geo.prototype.coords = {
       lat: 46.48048,
       lng: 30.756235
     };
 
+    Geo.prototype.LatLng = new google.maps.LatLng(46.48048, 46.48048);
+
+    Geo.prototype.subscribers = [];
+
     Geo.prototype.init = function() {
       this.geocoder = new google.maps.Geocoder();
-      return this.getCoords((function(_this) {
-        return function(position) {
-          _this.firstCoords.lat = position.coords.latitude;
-          return _this.firstCoords.lng = position.coords.longitude;
-        };
-      })(this));
+      this.update();
+      return this.interval = setInterval(this.update, 1 * 60 * 1000);
+    };
+
+    Geo.prototype.setCoords = function(position) {
+      var LatLngTMP;
+      this.coords.lat = position.coords.latitude;
+      this.coords.lng = position.coords.longitude;
+      LatLngTMP = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      return this.notify(LatLngTMP);
     };
 
     Geo.prototype.getCoords = function(callback, errorback) {
@@ -39,6 +50,10 @@ define(['singleton', 'async!http://maps.google.com/maps/api/js?sensor=true&key=A
       } else {
         return errorback(1);
       }
+    };
+
+    Geo.prototype.update = function() {
+      return this.getCoords(this.setCoords);
     };
 
     Geo.prototype.getCoordsError = function(error) {
@@ -54,7 +69,60 @@ define(['singleton', 'async!http://maps.google.com/maps/api/js?sensor=true&key=A
       }
     };
 
+    Geo.prototype.notify = function(LatLngTMP) {
+      var sub, _i, _len, _ref, _results;
+      if (!LatLngTMP.equals(this.LatLng)) {
+        this.LatLng = LatLngTMP;
+        _ref = this.subscribers;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          sub = _ref[_i];
+          _results.push(sub(LatLngTMP));
+        }
+        return _results;
+      }
+    };
+
+    Geo.prototype.on = function(type, handler) {
+      if (type !== 'change') {
+        throw new Error("Geo: no such event as '" + type + "'");
+        return false;
+      }
+      if (!handler instanceof Function) {
+        throw new Error("Geo: no such event as '" + type + "'");
+        return false;
+      }
+      this.subscribers.push(handler);
+      return handler;
+    };
+
+    Geo.prototype.off = function(type, handler) {
+      var i, indexes, sub, _i, _len;
+      if (handler == null) {
+        handler = type;
+      }
+      indexes = (function() {
+        var _i, _len, _ref, _results;
+        _ref = this.subscribers;
+        _results = [];
+        for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+          sub = _ref[i];
+          if (sub === handler) {
+            _results.push(i);
+          }
+        }
+        return _results;
+      }).call(this);
+      for (_i = 0, _len = indexes.length; _i < _len; _i++) {
+        i = indexes[_i];
+        arr.splice(i);
+      }
+      return this;
+    };
+
     return Geo;
 
   })(Singleton);
 });
+
+//# sourceMappingURL=geo.map

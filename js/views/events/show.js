@@ -83,3 +83,5 @@ define(['views/base/view', 'text!templates/events/show.hbs', 'geo'], function(Vi
 
   })(View);
 });
+
+//# sourceMappingURL=show.map

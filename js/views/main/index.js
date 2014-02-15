@@ -56,14 +56,15 @@ define(['chaplin', 'handlebars', 'views/base/view', 'text!templates/main/index.h
       $('#addEvent').css({
         'display': 'block'
       });
-      this.createMap(new google.maps.LatLng(this.geo.firstCoords.lat, this.geo.firstCoords.lng));
-      return this.geo.getCoords((function(_this) {
+      this.createMap(this.geo.LatLng);
+      this.geo.getCoords((function(_this) {
         return function(position) {
           var latlng;
           latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
           return _this.map.setCenter(latlng);
         };
       })(this));
+      return this.geo.on('change', this.setCenter);
     };
 
     IndexView.prototype.createMap = function(startCoords) {
@@ -134,3 +135,5 @@ define(['chaplin', 'handlebars', 'views/base/view', 'text!templates/main/index.h
 
   })(View);
 });
+
+//# sourceMappingURL=index.map

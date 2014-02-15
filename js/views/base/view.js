@@ -28,3 +28,5 @@ define(['handlebars', 'chaplin', 'lib/view-helper'], function(Handlebars, Chapli
 
   })(Chaplin.View);
 });
+
+//# sourceMappingURL=view.map

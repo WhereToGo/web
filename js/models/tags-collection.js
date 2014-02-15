@@ -32,3 +32,5 @@ define(['chaplin', 'models/base/collection', 'models/base/model'], function(Chap
 
   })(Collection);
 });
+
+//# sourceMappingURL=tags-collection.map

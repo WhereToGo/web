@@ -44,3 +44,5 @@ define(['chaplin', 'auth', 'views/site-view', 'views/header-view'], function(Cha
 
   })(Chaplin.Controller);
 });
+
+//# sourceMappingURL=controller.map

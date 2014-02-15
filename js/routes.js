@@ -11,3 +11,5 @@ define(function() {
     return match('event/:id', 'events#show');
   };
 });
+
+//# sourceMappingURL=routes.map

@@ -33,3 +33,5 @@ define(['views/base/view', 'text!templates/user/edit.hbs'], (function(_this) {
     })(View);
   };
 })(this));
+
+//# sourceMappingURL=edit.map

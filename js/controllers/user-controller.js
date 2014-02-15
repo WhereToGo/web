@@ -65,3 +65,5 @@ define(['controllers/base/controller', 'auth', 'models/base/model', 'models/user
 
   })(Controller);
 });
+
+//# sourceMappingURL=user-controller.map

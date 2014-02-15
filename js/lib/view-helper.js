@@ -10,3 +10,5 @@ define(['handlebars', 'chaplin', 'lib/utils'], function(Handlebars, Chaplin, uti
   });
   return null;
 });
+
+//# sourceMappingURL=view-helper.map

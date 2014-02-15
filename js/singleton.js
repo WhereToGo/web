@@ -28,3 +28,5 @@ define(function() {
 
   })();
 });
+
+//# sourceMappingURL=singleton.map

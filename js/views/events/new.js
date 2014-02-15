@@ -180,3 +180,5 @@ define(['chaplin', 'views/base/view', 'text!templates/events/new.hbs', 'geo', 'a
 
   })(View);
 });
+
+//# sourceMappingURL=new.map

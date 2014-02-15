@@ -24,3 +24,5 @@ define(['controllers/base/controller', 'models/events-collection', 'views/main/i
 
   })(Controller);
 });
+
+//# sourceMappingURL=main-controller.map

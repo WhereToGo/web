@@ -5,3 +5,5 @@ define(['underscore', 'chaplin'], function(_, Chaplin) {
   utils = Chaplin.utils.beget(Chaplin.utils);
   return utils;
 });
+
+//# sourceMappingURL=utils.map

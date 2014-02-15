@@ -20,3 +20,5 @@ define(['models/base/collection', 'models/events-model'], function(Collection, E
 
   })(Collection);
 });
+
+//# sourceMappingURL=events-collection.map
